@@ -8,7 +8,7 @@ class Board:
         self.colummns=colummns
         self.matrix=[]
     def create_board(self):
-        self.matrix=np.full((self.rows,self.colummns)," ")
+        self.matrix=np.full((self.rows,self.colummns),"T")
     def printboard(self , coordinate):
         if coordinate==0:
              for i in range(self.rows):
