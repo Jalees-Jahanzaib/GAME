@@ -12,9 +12,11 @@ class Board:
     def printboard(self , coordinate):
         if coordinate==0:
              for i in range(self.rows):
-                 for j in range(coordinate,coordinate+110):
+                for j in range(coordinate,coordinate+110):
                      print(self.matrix[i][j],end='')
                 print()
+
+
         elif coordinate==444:
             for i in range(self.rows):
                 for j in range(444-55,444+55):
