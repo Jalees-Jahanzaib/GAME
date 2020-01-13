@@ -2,6 +2,12 @@ from board import Board
 from boys import Boys
 from jetpacker import Jet_Packer
 from Scenery import Scenery
+from getch import *
+from config import Config
+import signal
+from alarmexception import AlarmException
+from coloroma import init,Fore
+init()
 objB=Board(30,500)
 
 objB.create_board()
@@ -19,20 +25,15 @@ obj_scenery.put_barrier(objB.matrix)
 obj_scenery.create_springs(objB)
 obj_scenery.create_holes(objB)
 obj_scenery.create_coins_platforms(objB)
-objB.printboard(55)
 
-enemy1 = Enemy(26,70,1)
-enemy2 = Enemy(26,210,1)
-enemy3 = Enemy(26,280,1)
-enemy4 = Enemy(26,350,1)
-enemy5 = Enemy(26,400,1)
+Boys1 = Boys(26,70,1)
+Boys2 = Boys(26,210,1)
+Boys3 = Boys(26,280,1)
+Boys4 = Boys(26,350,1)
+Boys5 = Boys(26,400,1)
 
-enemies = []
-enemies.append(enemy1) 
-enemies.append(enemy2)
-enemies.append(enemy3)
-enemies.append(enemy4)
-enemies.append(enemy5)
+obj_config = Config()
 
-for en in enemies:
-	en.starting_position(obj_board.matrix)
+def moveJP():
+    def alarmhandler(signum,frame):
+    
