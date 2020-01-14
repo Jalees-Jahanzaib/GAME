@@ -141,7 +141,5 @@ def user_input(timeout=0.15):
 
 
 # os.system('afplay ./music/theme.mp3&')
-while True:
-    os.system('clear')
-    end
-              
+    
+objB.printboard(55)          

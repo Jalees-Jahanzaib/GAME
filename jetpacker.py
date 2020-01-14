@@ -3,7 +3,7 @@ from boys import Character_Structure
 class Jet_Packer(Character_Structure):
     def __init__(self,yc,xc,direction):
         Character_Structure.__init__(self,yc,xc,direction)
-        self.__shape1 = [ ["|", 'O', "|"], [" ", "\\", " "], ["^", " ", "^"] ]
+        self.__shape1 = [ [" ", 'O', " "], ["[", "|", "<"], [" ", "^", " "] ]
         self.__shape2 = [ ["|", "O", "|"], [" ", "/", " "], ["^", " ", "^"] ]
         self.life=3
         self.allowed_collision=[" ","$"]

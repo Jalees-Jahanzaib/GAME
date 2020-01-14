@@ -29,7 +29,7 @@ class Config:
 	def coins_left(self, grid, obj_mario):
 		if (grid[obj_mario.yc + 2][obj_mario.xc - 1] == "$"):
 			self.coins += 1
-	
+
 
 
 
