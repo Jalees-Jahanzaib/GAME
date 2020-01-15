@@ -101,6 +101,102 @@ def movemario():
 x=time.time()
 y=x #copy
 z=x #copy
+while True: # The Game Loop
+	os.system('clear')
 
-    
-objB.printboard(55)          
+	obj_config.rem = 150 - (round(time.time()) - round(x))
+	print("TIME REMAINING:", obj_config.rem, end = '\t \t')
+	print("LIVES:", obj_mario.life, end = '\t \t')
+	print("COINS:", obj_config.coins, end = '\t \t')
+	print ("Lives of Boss Enemy:", obj_bossenemy.boss_life)
+	print("KILLS: ", obj_config.kills)
+
+	if(time.time() - y >= 0.05): #move basic enemies every 0.5 sec
+		y=time.time()
+		for en in list(enemies):
+			if(en.killed==0):
+				en.move(obj_board,obj_mario)
+			else:
+				enemies.remove(en)
+
+	if(time.time() - z >= 2 and obj_mario.abducted == False and obj_bossenemy.boss_kill is False): 
+		''' This checks if 3 seconds have passed, so as to switch the boss enemy to abduction mode'''
+		z=time.time()
+		if(obj_bossenemy.boss_type == 0):
+			obj_bossenemy.boss_type = 1
+			obj_bossenemy.remove_boss_abduct(obj_board.matrix)
+			obj_bossenemy.put_boss(obj_board.matrix)
+		else:
+			obj_bossenemy.boss_type=0
+			obj_bossenemy.remove_boss(obj_board.matrix)
+			obj_bossenemy.put_boss_abduct(obj_board.matrix)
+	
+	if(obj_bossenemy.boss_kill is True):
+		obj_bossenemy.remove_boss_abduct(obj_board.matrix)
+		obj_bossenemy.remove_boss(obj_board.matrix)
+
+	
+	
+	if(obj_mario.ycoo == 26): # Fell into a hole!
+		obj_mario.life -= 1
+		os.system('afplay ./music/mario_dies.wav&')
+		obj_board.spawn_mario(obj_mario)
+
+	if(obj_config.rem==0 or obj_mario.life == 0):
+		print("GAME OVER")
+		os.system("killall afplay")
+		os.system('afplay ./music/game_over.wav&')
+		quit()
+
+
+	if(obj_mario.xcoo<55):
+		obj_board.theyllprintit(0)
+	elif(obj_mario.xcoo>=55 and obj_mario.xcoo<444):
+		obj_board.theyllprintit(obj_mario.xcoo)
+	else:
+		obj_board.theyllprintit(444)
+	
+	movemario()
+	
+	if(obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo]== obj_scenery.spring or 
+		obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo+1]== obj_scenery.spring or 
+		obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo+2]==obj_scenery.spring ):
+		
+		os.system('afplay ./music/jump.wav&')
+		obj_board.jump_higher(obj_mario)
+
+	if(obj_board.matrix[obj_mario.ycoo-1][obj_mario.xcoo] == "|" and 
+		obj_board.matrix[obj_mario.ycoo-1][obj_mario.xcoo+2] == "|"):
+
+		obj_mario.abducted = True
+
+	if(obj_mario.abducted is True):
+		
+		obj_mario.disappear_mario(obj_board)
+		obj_mario.ycoo = obj_mario.ycoo - 1
+		obj_mario.reappear_mario(obj_board)
+
+		if(obj_board.matrix[obj_mario.ycoo-1][obj_mario.xcoo+1] == "*"):
+			print("GAME OVER")
+			os.system("killall afplay")
+			os.system('afplay ./music/game_over.wav&')
+			quit()
+
+	if(obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo]==" " # simulate gravity
+		and obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo+1]==" "
+		and obj_board.matrix[obj_mario.ycoo+3][obj_mario.xcoo+2]==" " 
+		and obj_mario.abducted is False):
+			
+		obj_mario.disappear_mario(obj_board)
+		obj_mario.ycoo+=1
+		obj_mario.reappear_mario(obj_board)
+
+	for en in list(enemies):
+		obj_mario.check_enemy_collision(obj_board, en, obj_config)
+
+	if(obj_mario.xcoo==497):
+		print("WELL DONE!")
+		os.system("killall afplay")
+		os.system('afplay ./music/game_over.wav&')
+		break;
+      
