@@ -26,12 +26,6 @@ obj_scenery.put_barrier(objB.matrix)
 obj_scenery.create_springs(objB)
 obj_scenery.create_holes(objB)
 obj_scenery.create_coins_platforms(objB)
-objB.printboard(33)
-Boys1 = Boys(26,70,1)
-Boys2 = Boys(26,210,1)
-Boys3 = Boys(26,280,1)
-Boys4 = Boys(26,350,1)
-Boys5 = Boys(26,400,1)
 
 obj_config = Config()
 
