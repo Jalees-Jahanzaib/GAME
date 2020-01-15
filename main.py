@@ -35,14 +35,14 @@ def user_input(timeout=0.15):
 			pass
 		signal.signal(signal.SIGALRM, signal.SIG_IGN)
 		return ''
-# char = user_input()
+    char = user_input()
 
-# 	if char == 'd':
-# 		obj_config.coins_right(objB.matrix, obj_mario)
-# 		can_he=obj_mario.check_not_collision_right(objB.matrix)
+	if char == 'd':
+		obj_config.coins_right(objB.matrix, obj_mario)
+		can_he=obj_mario.check_not_collision_right(objB.matrix)
 
-# 		if(objB.matrix[obj_mario.yc-5][obj_mario.xc + 1] == 'B'):
-# 			objB.matrix[obj_mario.yc-5][obj_mario.xc + 1] = " "
+		if(objB.matrix[obj_mario.yc-5][obj_mario.xc + 1] == 'B'):
+			objB.matrix[obj_mario.yc-5][obj_mario.xc + 1] = " "
 
 		
 # 		if can_he == 1:
