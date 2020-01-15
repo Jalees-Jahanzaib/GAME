@@ -33,5 +33,5 @@ class Jet_Packer(Character_Structure):
     def reappear(self, obj_board):
         for i in range(self.yc, self.yc+3, 1):
             for j in range(self.xc, self.xc+3, 1):
-                    obj_board.matrix[i][j] = self.__shape1[i-self.ycoo][j-self.xcoo]
+                    obj_board.matrix[i][j] = self.__shape1[i-self.yc][j-self.xc]
                 
