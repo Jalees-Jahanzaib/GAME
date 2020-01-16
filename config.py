@@ -1,4 +1,4 @@
-
+import os
 class Config:
 	'''Miscellaneous Stuff '''
 	def __init__(self):
@@ -22,14 +22,13 @@ class Config:
 
 		return False
 
-	def coins_right(self, grid, obj_jp):
-		if (grid[obj_jp.yc + 2][obj_jp.xc + 3] == "$"):
+	def coins_right(self, grid, obj_mario):
+		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo + 3] == "$"):
 			self.coins += 1
+			os.system('afplay ./music/coin.wav&')
 
 	def coins_left(self, grid, obj_mario):
-		if (grid[obj_jp.yc + 2][obj_jp.xc - 1] == "$"):
+		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo - 1] == "$"):
 			self.coins += 1
-
-
-
+			os.system('afplay ./music/coin.wav&')
 

@@ -4,6 +4,7 @@ from colorama import init, Fore
 init()
 
 class Scenery:
+	'''This class defines and puts all the clouds, bricks etc onto the grid'''
 	
 	def __init__(self):
 	
