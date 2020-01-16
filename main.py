@@ -1,7 +1,7 @@
 from board import Board
 import os
 from boys import Boys
-from jetpacker import Jet_Packer
+from jetpacker import JetPacker
 from Scenery import Scenery
 from getch import _getChUnix as getChar
 from config import Config
@@ -11,9 +11,9 @@ from colorama import init,Fore
 init()
 objB=Board(30,500)
 import time
-objB.create_board()
-obj_jp = Jet_Packer(25,0,1)
-obj_jp.starting_p(objB.matrix)
+obj_B.create_board()
+obj_jp = JetPacker(25,0,1)
+obj_jp.starting_position(objB.matrix)
 obj_scenery=Scenery()
 
 obj_scenery.create_ground(objB.matrix)
