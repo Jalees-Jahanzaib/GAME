@@ -27,10 +27,10 @@ class Board:
                 for j in range(coordinate-55,coordinate+55):
                     print(self.matrix[i][j],end='')
                 print()
-    def rebirth(self,objB):
-        objB.jetpackerDisappear(self)
-        objB.yc=objB.yc-11
-        objB.reappear(self)
+    def revive(self,obj_jp):
+        obj_jp.jetpackerDisappear(self)
+        obj_jp.yc=objB.yc-11
+        obj_jp.reappear(self)
 
 
 
