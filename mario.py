@@ -3,7 +3,6 @@ import os
 
 from enemy import Main_person
 class Mario(Main_person):
-	'''This class defines Mario and helps him move around, checking collisions and collecting coins '''
 	
 	def __init__(self, ycoo, xcoo, dire): 
 		
@@ -32,7 +31,7 @@ class Mario(Main_person):
 		
 		
 		elif (grid[self.ycoo + 1][self.xcoo + 3] == "+" 
-			or grid[self.ycoo+2][self.xcoo+3] == "+"):
+			or grid[self.ycoo+2][self.xcoo+3] == "+" or grid[self.ycoo][self.xcoo+3] == "+"):
 			return 2
 		
 		else:
@@ -48,7 +47,7 @@ class Mario(Main_person):
 			return 1
 
 		elif (grid[self.ycoo + 1][self.xcoo - 1] == "+" 
-			or grid[self.ycoo+2][self.xcoo - 1] == "+"):
+			or grid[self.ycoo+2][self.xcoo - 1] == "+"  or grid[self.ycoo][self.xcoo - 1] == "+"):
 			
 			return 2
 
@@ -67,18 +66,6 @@ class Mario(Main_person):
 						obj_board.matrix[i][j] = self.__shape1[i-self.ycoo][j-self.xcoo]
 				else:
 					obj_board.matrix[i][j] = self.__shape2[i-self.ycoo][j-self.xcoo]
-
-	# def check_enemy_collision(self, obj_board, obj_enemy, obj_config):
-	# 	if(obj_board.matrix[self.ycoo+3][self.xcoo]=="@" # simulate gravity
-	# 		or obj_board.matrix[self.ycoo+3][self.xcoo+1]=="@"
-	# 		or obj_board.matrix[self.ycoo+3][self.xcoo+2]=="@"):
-	# 		obj_enemy.disappear_enemy(obj_board.matrix)
-	# 		obj_enemy.killed = 1
-	# 		obj_config.kills += 1
-
-
-
-	
 
 
 

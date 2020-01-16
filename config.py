@@ -1,6 +1,5 @@
 import os
 class Config:
-	'''Miscellaneous Stuff '''
 	def __init__(self):
 		self.rem = 150
 		self.coins =0 
@@ -12,7 +11,6 @@ class Config:
 			return True
 		except ValueError:
 			pass
-	 
 		try:
 			import unicodedata
 			unicodedata.numeric(s)
@@ -25,10 +23,9 @@ class Config:
 	def coins_right(self, grid, obj_mario):
 		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo + 3] == "$"):
 			self.coins += 1
-			os.system('afplay ./music/coin.wav&')
 
 	def coins_left(self, grid, obj_mario):
 		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo - 1] == "$"):
 			self.coins += 1
-			os.system('afplay ./music/coin.wav&')
+			
 

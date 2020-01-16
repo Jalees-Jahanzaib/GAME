@@ -11,7 +11,7 @@ class Scenery:
 		self.spring = Fore.RED + "j" + '\x1b[0m'
 		self.__sky = Fore.RED + "^" + '\033[42m' + '\033[0m'
 		self.brick_score = 5
-		self.__ground1 = Fore.MAGENTA + "T" + '\x1b[0m'
+		self.__ground1 = Fore.GREEN + "^" + '\x1b[0m'
 		self.__cloud=[]
 
 	def create_ground(self, grid):
