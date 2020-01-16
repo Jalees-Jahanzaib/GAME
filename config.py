@@ -22,12 +22,12 @@ class Config:
 
 		return False
 
-	def coins_right(self, grid, obj_mario):
-		if (grid[obj_mario.yc + 2][obj_mario.xc + 3] == "$"):
+	def coins_right(self, grid, obj_jp):
+		if (grid[obj_jp.yc + 2][obj_jp.xc + 3] == "$"):
 			self.coins += 1
 
 	def coins_left(self, grid, obj_mario):
-		if (grid[obj_mario.yc + 2][obj_mario.xc - 1] == "$"):
+		if (grid[obj_jp.yc + 2][obj_jp.xc - 1] == "$"):
 			self.coins += 1
 
 
