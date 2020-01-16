@@ -1,6 +1,7 @@
 import random
 import os
-
+from colorama import init, Fore
+init()
 from enemy import Main_person
 class JetPacker(Main_person):
 	
@@ -13,13 +14,13 @@ class JetPacker(Main_person):
 		self.allowed_collision = [ " ", "$" ]
 		self.coins = 0
 		self.did_he_die = 0
-		self.abducted = False
+		self.mode = False
 
 	def starting_position(self, grid):
 		
 		for i in range(25,28,1):
 			for j in range(0, 3, 1):
-				grid[i][j] = self.__shape1[i-25][j]
+				grid[i][j] =self.__shape1[i-25][j]
 
 	def check_not_collision_right(self, grid):
 		
@@ -62,7 +63,7 @@ class JetPacker(Main_person):
 	def reapper(self, obj_board):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
-				if self.direction == 1:
+				if self.direction == 1 and self.mode == False:
 						obj_board.matrix[i][j] = self.__shape1[i-self.ycoo][j-self.xcoo]
 				else:
 					obj_board.matrix[i][j] = self.__shape2[i-self.ycoo][j-self.xcoo]

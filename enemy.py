@@ -35,7 +35,7 @@ class Enemy(Main_person):
 class Bullet:
 	def __init__(self, dire,xcoo,ycoo):
 		self.direction=dire
-		self.shape1='o'
+		self.shape1='+'
 		self.xcoo=xcoo
 		self.ycoo=ycoo
 	def put_bullet(self,grid):

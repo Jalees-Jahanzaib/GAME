@@ -4,21 +4,15 @@ from colorama import init, Fore
 init()
 
 class Scenery:
-	'''This class defines and puts all the clouds, bricks etc onto the grid'''
-	
 	def __init__(self):
-	
-		self.spring = Fore.RED + "j" + '\x1b[0m'
 		self.__sky = Fore.RED + "^" + '\033[42m' + '\033[0m'
 		self.brick_score = 5
 		self.__ground1 = Fore.GREEN + "^" + '\x1b[0m'
 		self.__cloud=[]
-
 	def create_ground(self, grid):
 		for i in range(500):
 			grid[29][i]= self.__ground1
 			grid[28][i]= Fore.GREEN + "^" + '\x1b[0m'
-
 	def create_sky(self,grid):
 		for i in range(500):
 			grid[0][i]=self.__sky
@@ -29,7 +23,7 @@ class Scenery:
 			for line in obj:
 				self.__cloud.append(line.strip('\n'))
 
-		while(d<271): # scenery1: we show clouds till column no. 270
+		while(d<271): 
 			e=d
 			f=c
 			for i in range(4):
@@ -52,12 +46,9 @@ class Scenery:
 			obj_board.matrix[23][i] = "$"
 			obj_board.matrix[21][i] = "$"
 			obj_board.matrix[22][i] = "$"
-		for i in range(90,105):
+		for i in range(30,55):
 			obj_board.matrix[20][i] = "$"
 
-
-
-				
 
 		
 

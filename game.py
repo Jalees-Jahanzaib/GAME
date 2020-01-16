@@ -133,7 +133,6 @@ def motion():
 
 				jetpacker.reapper(board)
 
-			os.system('afplay ./music/jump.wav&')
 	if char=="m":
 		en1=Bullet(jetpacker.direction,jetpacker.xcoo,jetpacker.ycoo)
 		en1.put_bullet(board.matrix)
