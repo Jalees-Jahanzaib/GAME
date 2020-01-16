@@ -12,7 +12,6 @@ class Enemy(Main_person):
 	
 	def __init__(self, ycoo, xcoo, dire):
 		Main_person.__init__(self, ycoo, xcoo, dire)
-		self.__shape = [ ["+", "+"], ["@", "@"] ]
 		self.allowed_collision = [ " " ]
 		self.hit_with_mario = [ "^" ]
 		self.killed = 0

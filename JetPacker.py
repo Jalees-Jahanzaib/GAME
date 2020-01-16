@@ -2,7 +2,7 @@ import random
 import os
 
 from enemy import Main_person
-class Mario(Main_person):
+class JetPacker(Main_person):
 	
 	def __init__(self, ycoo, xcoo, dire): 
 		
@@ -54,12 +54,12 @@ class Mario(Main_person):
 		else:
 			return 3
 	
-	def disappear_mario(self, obj_board):
+	def remove_jp(self, obj_board):
 		for i in range(self.ycoo, self.ycoo+3):
 			for j in range(self.xcoo, self.xcoo+3):
 				obj_board.matrix[i][j] = " "
 
-	def reappear_mario(self, obj_board):
+	def reapper(self, obj_board):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
 				if self.direction == 1:

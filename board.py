@@ -33,14 +33,14 @@ class Board:
 					print(self.matrix[i][j],end='')
 				print()
 
-	def spawn_mario(self, obj_mario): 
+	def revive(self, jetpacker): 
 
-		obj_mario.disappear_mario(self)
+		jetpacker.remove_jp(self)
 						
-		obj_mario.ycoo -= 14
-		obj_mario.xcoo -= 5
+		jetpacker.ycoo -= 14
+		jetpacker.xcoo -= 5
 
-		obj_mario.reappear_mario(self)
+		jetpacker.reapper(self)
 
 
 
