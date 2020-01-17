@@ -121,7 +121,7 @@ def motion():
 			obj_config.coins_up(board.matrix, jetpacker)
 			prev_ycoo=jetpacker.ycoo
 			
-			while(jetpacker.ycoo != prev_ycoo-8 and # 8 units; checking if there's anything above
+			while(jetpacker.ycoo != prev_ycoo-8 and  
 				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+2] == " " and
 				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == " " and
 				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo] == " "): 
@@ -145,8 +145,7 @@ z=x #copy
 
 
 while True:
-	os.system('clear')
-
+	print('\033[0;0H',end='')
 	obj_config.rem = 150 - (round(time.time()) - round(x))
 	print("TIME REMAINING:", obj_config.rem, end = '\t \t')
 	print("LIVES:", jetpacker.life, end = '\t \t')
