@@ -122,7 +122,6 @@ def motion():
 
 		if(True):
 			obj_config.coins_up(board.matrix, jetpacker)
-			
 			prev_ycoo=jetpacker.ycoo
 			
 			while(jetpacker.ycoo != prev_ycoo-8 and  
@@ -161,7 +160,7 @@ while True:
 	if(obj_config.rem==0 or jetpacker.life == 0):
 		print("GAME OVER")
 		quit()
-	# if (jetpacker.xcoo + 2 >=20 and jetpacker.xcoo - 2 < 23) or (jetpacker.ycoo + 2 >=15 and jetpacker.xcoo - 2 < 18):
+	# if (jetpacker.xcoo + 2 >=20 and jetpacker.xcoo - 4 < 23) or (jetpacker.ycoo + 2 >=15 and jetpacker.xcoo - 2 < 18):
 	# 	jetpacker.ycoo+=1
 	# 	jetpacker.xcoo+=1
 

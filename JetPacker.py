@@ -34,9 +34,7 @@ class JetPacker(Main_person):
 		elif (grid[self.ycoo + 1][self.xcoo + 3] == "+" 
 			or grid[self.ycoo+2][self.xcoo+3] == "+" or grid[self.ycoo][self.xcoo+3] == "+"):
 			return 2
-		elif (grid[self.ycoo -1][self.xcoo +1] == "+" 
-			or grid[self.ycoo-1][self.xcoo+2] == "+" or grid[self.ycoo-1][self.xcoo] == "+"):
-			return 2
+	
 		else:
 			return 3
 		
@@ -56,7 +54,39 @@ class JetPacker(Main_person):
 
 		else:
 			return 3
-	
+	def check_not_collision_up(self, grid):
+
+		if (grid[self.ycoo-1][self.xcoo] in self.allowed_collision 
+			and grid[self.ycoo-1][self.xcoo+1] in self.allowed_collision
+			and grid[self.ycoo-1][self.xcoo+2] in self.allowed_collision
+			and self.xcoo-1 != -1): # last condition for not going out of the board at -1th column
+
+			return 1
+
+		elif (grid[self.ycoo - 1][self.xcoo +1] == "+" 
+			or grid[self.ycoo-1][self.xcoo + 2 ] == "+"  or grid[self.ycoo-1][self.xcoo] == "+"):
+			
+			return 2
+
+		else:
+			return 3
+	def check_not_collision_down(self, grid):
+
+		if (grid[self.ycoo][self.xcoo-1] in self.allowed_collision 
+			and grid[self.ycoo+1][self.xcoo-1] in self.allowed_collision
+			and grid[self.ycoo+2][self.xcoo-1] in self.allowed_collision
+			and self.xcoo-1 != -1): # last condition for not going out of the board at -1th column
+
+			return 1
+
+		elif (grid[self.ycoo + 1][self.xcoo - 1] == "+" 
+			or grid[self.ycoo+2][self.xcoo - 1] == "+"  or grid[self.ycoo][self.xcoo - 1] == "+"):
+			
+			return 2
+
+		else:
+			return 3
+
 	def remove_jp(self, obj_board):
 		for i in range(self.ycoo, self.ycoo+3):
 			for j in range(self.xcoo, self.xcoo+3):
