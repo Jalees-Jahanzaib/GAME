@@ -10,8 +10,10 @@ class JetPacker(Main_person):
 		Main_person.__init__(self, ycoo, xcoo, dire)
 		self.__shape1 = [ [" ", 'O', " "], ["[", "|", "<"], [" ", "^", " "] ]
 		self.__shape2 = [ [" ", 'O', " "], [">", "|", "]"], [" ", "^", " "] ]
+		self.__shape3=[["!","!",'!'],["!","!",'!'],["!","!",'!']]
+		self.powermode=False
 		self.life = 5
-		self.allowed_collision = [ " ", "$" ]
+		self.allowed_collision = [ " ", Fore.YELLOW+"$"+'\x1b[0m' ]
 		self.coins = 0
 		self.did_he_die = 0
 		self.mode = False
@@ -20,7 +22,7 @@ class JetPacker(Main_person):
 		
 		for i in range(25,28,1):
 			for j in range(0, 3, 1):
-				grid[i][j] =self.__shape1[i-25][j]
+				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.BLACK
 
 	def check_not_collision_right(self, grid):
 		
@@ -31,8 +33,8 @@ class JetPacker(Main_person):
 			return 1
 		
 		
-		elif (grid[self.ycoo + 1][self.xcoo + 3] == "+" 
-			or grid[self.ycoo+2][self.xcoo+3] == "+" or grid[self.ycoo][self.xcoo+3] == "+"):
+		elif (grid[self.ycoo + 1][self.xcoo + 3] == Back.RED + '+' + Back.RESET
+			or grid[self.ycoo+2][self.xcoo+3] == Back.RED + '+' + Back.RESET or grid[self.ycoo][self.xcoo+3] == Back.RED + '+' + Back.RESET):
 			return 2
 	
 		else:
@@ -47,8 +49,8 @@ class JetPacker(Main_person):
 
 			return 1
 
-		elif (grid[self.ycoo + 1][self.xcoo - 1] == "+" 
-			or grid[self.ycoo+2][self.xcoo - 1] == "+"  or grid[self.ycoo][self.xcoo - 1] == "+"):
+		elif (grid[self.ycoo + 1][self.xcoo - 1] == Back.RED + '+' + Back.RESET
+			or grid[self.ycoo+2][self.xcoo - 1] == Back.RED + '+' + Back.RESET  or grid[self.ycoo][self.xcoo - 1] == Back.RED + '+' + Back.RESET):
 			
 			return 2
 
@@ -57,28 +59,28 @@ class JetPacker(Main_person):
 
 	def check_not_collision_down(self, grid,obj_config):
 
-		if grid[self.ycoo-1][self.xcoo]=='$':
+		if grid[self.ycoo-1][self.xcoo]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo-1][self.xcoo]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo-1][self.xcoo+1]=='$':
+		elif grid[self.ycoo-1][self.xcoo+1]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo-1][self.xcoo+1]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo-1][self.xcoo+2]=='$':
+		elif grid[self.ycoo-1][self.xcoo+2]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo-1][self.xcoo+2]=' '
 			obj_config.coins_up(grid,self)
 	def check_not_collision_up(self, grid,obj_config):
 
-		if grid[self.ycoo+3][self.xcoo]=='$':
+		if grid[self.ycoo+3][self.xcoo]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo+3][self.xcoo]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo+3][self.xcoo+1]=='$':
+		elif grid[self.ycoo+3][self.xcoo+1]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo+3][self.xcoo+1]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo+3][self.xcoo+2]=='$':
+		elif grid[self.ycoo+3][self.xcoo+2]==Fore.YELLOW+ "$" +'\x1b[0m':
 			grid[self.ycoo+3][self.xcoo+2]=' '
 			obj_config.coins_up(grid,self)
 			
@@ -93,14 +95,17 @@ class JetPacker(Main_person):
 	def reapper(self, obj_board):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
-				if self.direction == 1 and self.mode == False:
-						obj_board.matrix[i][j] = self.__shape1[i-self.ycoo][j-self.xcoo]
-				else:
-					obj_board.matrix[i][j] = self.__shape2[i-self.ycoo][j-self.xcoo]
+				if self.direction == 1 and self.powermode==False:
+						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.BLACK
+				elif self.direction == -1 and self.powermode==False:
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.BLACK
+				elif  self.powermode==True:
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.BLACK
+				
 	def check_enemy_collision(self, obj_board):
-		if(obj_board.matrix[self.ycoo+3][self.xcoo]=="+" # simulate gravity
-		or obj_board.matrix[self.ycoo+3][self.xcoo+1]=="+"
-		or obj_board.matrix[self.ycoo+3][self.xcoo+2]=="+"):
+		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Back.RED + '+' + Back.RESET # simulate gravity
+		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Back.RED + '+' + Back.RESET
+		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==Back.RED + '+' + Back.RESET):
 			self.life -= 1
 			obj_board.revive(self)
 			self.did_he_die = 0
@@ -110,11 +115,7 @@ class JetPacker(Main_person):
 		or obj_board.matrix[self.ycoo+3][self.xcoo+2]=="$"):
 			obj_config.coins_up(obj_board.matrix,self)
 			self.did_he_die = 0
-	def check_magent(self,obj_board):
-		if(obj_board.matrix[self.ycoo+3+1][self.xcoo]=="#"# simulate gravity
-		    or obj_board.matrix[self.ycoo+3+1][self.xcoo+1]=="#"
-		    or obj_board.matrix[self.ycoo+3+1][self.xcoo+2]=="#"):
-			self.ycoo+=3
+
 		
 		
 

@@ -37,15 +37,15 @@ class Scenery:
 	def create_coins_platforms(self, obj_board):
 
 		for i in range(115,130):
-			obj_board.matrix[16][i] = "$"
+			obj_board.matrix[16][i] =Fore.YELLOW+ "$" +'\x1b[0m'
 		for i in range(115,130):
-			obj_board.matrix[17][i] = "$"
+			obj_board.matrix[17][i] = Fore.YELLOW+ "$" +'\x1b[0m'
 
 		
 		for i in range (320,334):
-			obj_board.matrix[23][i] = "$"
-			obj_board.matrix[21][i] = "$"
-			obj_board.matrix[22][i] = "$"
+			obj_board.matrix[23][i] =Fore.YELLOW+ "$" +'\x1b[0m'
+			obj_board.matrix[21][i] = Fore.YELLOW+ "$" +'\x1b[0m'
+			obj_board.matrix[22][i] = Fore.YELLOW+ "$" +'\x1b[0m'
 
 
 		

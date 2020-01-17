@@ -1,4 +1,4 @@
-from colorama import init, Fore
+from colorama import init, Fore,Back
 init()
 import os
 
@@ -18,15 +18,16 @@ class Enemy(Main_person):
 
 	def starting_position1(self, grid):
 		for i in range(self.ycoo,self.ycoo+4):
-				grid[i][self.xcoo] = '+'
+				grid[i][self.xcoo] =Back.RED + '+' + Back.RESET
+				x0=Back.RESET+" "
 	def starting_position2(self, grid):
 		for i in range(self.xcoo,self.xcoo+6):
-				grid[self.ycoo][i] = '+'
+				grid[self.ycoo][i] = Back.RED + '+' + Back.RESET
     
 	def starting_position3(self, grid):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
-				grid[i][j] =self.shape3[i-self.ycoo][j-self.xcoo]
+				grid[i][j] =Back.RED + self.shape3[i-self.ycoo][j-self.xcoo] + Back.RESET
 
 	def reappear_enemy(self, grid):
 		for i in range(self.ycoo, self.ycoo + 2, 1):
@@ -60,7 +61,8 @@ class Magnet:
 	def printmagnet(self,grid):
 		for i in range(20,23,1):
 			for j in range(15, 18, 1):
-				grid[i][j] =Fore.RED + self.shape1[i-20][j-15] + '\x1b[0m'
+				grid[i][j] =Back.RED + self.shape1[i-20][j-15] + '\x1b[0m'
+
 	def removemagent(self,grid):
 		for i in range(20,23):
 			for j in range(40,43):
