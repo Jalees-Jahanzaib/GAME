@@ -37,7 +37,6 @@ class Board:
 
 		jetpacker.remove_jp(self)
 						
-		jetpacker.ycoo -= 14
 		jetpacker.xcoo -= 5
 
 		jetpacker.reapper(self)

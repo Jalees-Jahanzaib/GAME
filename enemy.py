@@ -6,8 +6,8 @@ class Main_person:
 	def __init__(self,ycoo,xcoo,dire):
 		self.xcoo = xcoo
 		self.ycoo = ycoo
+		self.shape3=[["+"," "," "],[" ","+"," "],[" "," ","+"]]
 		self.direction = dire
-
 class Enemy(Main_person):
 	
 	def __init__(self, ycoo, xcoo, dire):
@@ -22,11 +22,11 @@ class Enemy(Main_person):
 	def starting_position2(self, grid):
 		for i in range(self.xcoo,self.xcoo+6):
 				grid[self.ycoo][i] = '+'
-
-	def disappear_enemy(self, grid):
-		for i in range(self.ycoo, self.ycoo+2, 1):
-			for j in range(self.xcoo, self.xcoo+2, 1):
-				grid[i][j] = " "
+    
+	def starting_position3(self, grid):
+		for i in range(self.ycoo, self.ycoo+3, 1):
+			for j in range(self.xcoo, self.xcoo+3, 1):
+				grid[i][j] =self.shape3[i-self.ycoo][j-self.xcoo]
 
 	def reappear_enemy(self, grid):
 		for i in range(self.ycoo, self.ycoo + 2, 1):

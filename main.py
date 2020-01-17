@@ -1,7 +1,7 @@
 import signal
 import os
 import time
-from colorama import init, Fore
+from colorama import init, Fore,Back
 init()
 
 from alarmexception import AlarmException
@@ -34,7 +34,7 @@ enemy21 = Enemy(20,240,1)
 enemy31 = Enemy(20,100,1)
 bullets=[]
 enemies = []
-enemies.append(enemy1) 
+# enemies.append(enemy1) 
 enemies.append(enemy2)
 enemies.append(enemy3)
 enemies.append(enemy4)
@@ -47,8 +47,30 @@ for en in enemies:
 	en.starting_position1(board.matrix)
 for en in enemies2:
 	en.starting_position2(board.matrix)
-
+enemy1.starting_position3(board.matrix)
 obj_config = Config()
+def selfmotion():
+
+	obj_config.coins_right(board.matrix, jetpacker)
+	
+
+	can_he=jetpacker.check_not_collision_right(board.matrix)
+
+	
+	if can_he == 1:
+		jetpacker.remove_jp(board)
+		jetpacker.xcoo+=1
+		jetpacker.direction = 1
+		jetpacker.reapper(board)
+
+	elif can_he == 2:
+		jetpacker.life -= 1
+		board.revive(jetpacker)
+		jetpacker.did_he_die = 0
+
+
+	else:
+		pass
 
 def motion():
 	''' moves Mario'''
@@ -73,6 +95,8 @@ def motion():
 	char = user_input()
 
 	if char == 'd':
+		m1.printmagnet(board.matrix)
+
 		obj_config.coins_right(board.matrix, jetpacker)
 		
 
@@ -117,24 +141,16 @@ def motion():
 		quit()
 	
 	if char == 'w':
+	
+		prev_ycoo=jetpacker.ycoo
 		
-		m1.printmagnet(board.matrix)
+		while(jetpacker.ycoo != prev_ycoo-8 and # 8 units; checking if there's anything above
+			board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+2] == " " and
+			board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == " " and
+			board.matrix[jetpacker.ycoo-1][jetpacker.xcoo] == " "): 
 
-		if(True):
-			obj_config.coins_up(board.matrix, jetpacker)
-			prev_ycoo=jetpacker.ycoo
-			
-			while(jetpacker.ycoo != prev_ycoo-8 and  
-				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+2] == " " and
-				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == " " and
-				board.matrix[jetpacker.ycoo-1][jetpacker.xcoo] == " "): 
-
-				jetpacker.remove_jp(board)
-				jetpacker.ycoo -= 1
-				obj_config.coins_up(board.matrix, jetpacker)
-
-
-				jetpacker.reapper(board)
+			jetpacker.remove_jp(board)
+			jetpacker.ycoo -= 1
 
 	if char=="m":
 		en1=Bullet(jetpacker.direction,jetpacker.xcoo,jetpacker.ycoo)
@@ -146,14 +162,16 @@ y=x #copy
 z=x #copy
 
 
-
+startime=0
 while True:
+	if startime==0:
+		os.system('clear')
+		startime+=1
 	print('\033[0;0H',end='')
 	obj_config.rem = 150 - (round(time.time()) - round(x))
 	print("TIME REMAINING:", obj_config.rem, end = '\t \t')
 	print("LIVES:", jetpacker.life, end = '\t \t')
-	print("COINS:", obj_config.coins, end = '\t \t')
-	print("KILLS: ", obj_config.kills)
+	print("COINS:", obj_config.coins, end = '\t \t\n')
 
 
 
@@ -171,7 +189,7 @@ while True:
 		board.theyllprintit(jetpacker.xcoo)
 	else:
 		board.theyllprintit(444)
-	
+	# selfmotion()
 	motion()
 	# m1.removemagent(board.matrix)
 	for i in bullets:
@@ -179,6 +197,11 @@ while True:
 	for i in bullets:
 		i.move(board.matrix)
 	
+	jetpacker.check_enemy_collision(board)
+	jetpacker.check_magent(board)
+	jetpacker.check_not_collision_down(board.matrix,obj_config)
+	jetpacker.check_not_collision_up(board.matrix,obj_config)
+
 	if(board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == "*"):
 		print("GAME OVER")
 		quit()

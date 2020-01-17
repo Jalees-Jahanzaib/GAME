@@ -28,8 +28,7 @@ class Config:
 		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo - 1] == "$"):
 			self.coins += 1
 	def coins_up(self, grid, obj_mario):
-		if (grid[obj_mario.ycoo - 1][obj_mario.xcoo] == "$" or grid[obj_mario.ycoo - 1][obj_mario.xcoo+2] == "$" or grid[obj_mario.ycoo - 1][obj_mario.xcoo+1] == "$" ):
-			self.coins += 1
+		self.coins += 1
 
 	
 
