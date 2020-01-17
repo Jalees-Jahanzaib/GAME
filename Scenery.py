@@ -46,8 +46,6 @@ class Scenery:
 			obj_board.matrix[23][i] = "$"
 			obj_board.matrix[21][i] = "$"
 			obj_board.matrix[22][i] = "$"
-		for i in range(30,55):
-			obj_board.matrix[20][i] = "$"
 
 
 		

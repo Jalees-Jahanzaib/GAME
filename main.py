@@ -9,7 +9,7 @@ from getch import _getChUnix as getChar
 from board import Board
 from JetPacker import JetPacker 
 from scenery import Scenery
-from enemy import Enemy, Bullet
+from enemy import Enemy, Bullet,Magnet
 from config import Config
 
 board = Board(30,500)
@@ -19,7 +19,7 @@ jetpacker = JetPacker(25,0,1)
 jetpacker.starting_position(board.matrix)
 
 obj_scenery = Scenery()
-
+m1=Magnet()
 obj_scenery.create_ground(board.matrix)
 obj_scenery.create_sky(board.matrix)
 obj_scenery.create_clouds(board.matrix, 2, 11)
@@ -74,7 +74,7 @@ def motion():
 
 	if char == 'd':
 		obj_config.coins_right(board.matrix, jetpacker)
-		obj_config.coins_up(board.matrix, jetpacker)
+		
 
 		can_he=jetpacker.check_not_collision_right(board.matrix)
 
@@ -117,6 +117,9 @@ def motion():
 		quit()
 	
 	if char == 'w':
+		
+		m1.printmagnet(board.matrix)
+
 		if(True):
 			obj_config.coins_up(board.matrix, jetpacker)
 			prev_ycoo=jetpacker.ycoo
@@ -167,6 +170,9 @@ while True:
 		board.theyllprintit(444)
 	
 	motion()
+	# m1.removemagent(board.matrix)
+	for i in bullets:
+		i.bullethits(board.matrix)
 	for i in bullets:
 		i.move(board.matrix)
 

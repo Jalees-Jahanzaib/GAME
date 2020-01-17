@@ -35,7 +35,7 @@ class Enemy(Main_person):
 class Bullet:
 	def __init__(self, dire,xcoo,ycoo):
 		self.direction=dire
-		self.shape1='+'
+		self.shape1='0'
 		self.xcoo=xcoo
 		self.ycoo=ycoo
 	def put_bullet(self,grid):
@@ -50,3 +50,18 @@ class Bullet:
 	def move(self,grid):
 		self.removebullet(grid)
 		self.put_bullet(grid)
+	def bullethits(self,grid):
+		if self.xcoo+1=='+':
+			grid[self.ycoo][self.xcoo+1]=' '
+class Magnet:
+	def __init__(self):
+		self.shape1=[["#"," ","#"],["#"," ","#"],["#","#","#"]]
+		
+	def printmagnet(self,grid):
+		for i in range(20,23,1):
+			for j in range(15, 18, 1):
+				grid[i][j] =Fore.RED + self.shape1[i-20][j-15] + '\x1b[0m'
+	def removemagent(self,grid):
+		for i in range(20,23):
+			for j in range(40,43):
+				grid[i][j]=" "
