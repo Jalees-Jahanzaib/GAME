@@ -34,7 +34,9 @@ class JetPacker(Main_person):
 		elif (grid[self.ycoo + 1][self.xcoo + 3] == "+" 
 			or grid[self.ycoo+2][self.xcoo+3] == "+" or grid[self.ycoo][self.xcoo+3] == "+"):
 			return 2
-		
+		elif (grid[self.ycoo -1][self.xcoo +1] == "+" 
+			or grid[self.ycoo-1][self.xcoo+2] == "+" or grid[self.ycoo-1][self.xcoo] == "+"):
+			return 2
 		else:
 			return 3
 		
