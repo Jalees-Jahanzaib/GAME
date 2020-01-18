@@ -1,6 +1,7 @@
 from colorama import init, Fore,Back
 init()
 import os
+from random import randint
 
 class Main_person:
 	def __init__(self,ycoo,xcoo,dire):
@@ -57,11 +58,12 @@ class Bullet:
 class Magnet:
 	def __init__(self):
 		self.shape1=[["#"," ","#"],["#"," ","#"],["#","#","#"]]
+		self.random1=randint(0,5)
 		
 	def printmagnet(self,grid):
-		for i in range(20,23,1):
-			for j in range(15, 18, 1):
-				grid[i][j] =Fore.MAGENTA + self.shape1[i-20][j-15] + '\x1b[0m'
+		for i in range(20-self.random1,23-self.random1,1):
+			for j in range(15-self.random1, 18-self.random1, 1):
+				grid[i][j] =Fore.MAGENTA + self.shape1[i-20+self.random1][j-15+self.random1] + '\x1b[0m'
 
 	def removemagent(self,grid):
 		for i in range(20,23):
