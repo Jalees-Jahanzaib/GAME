@@ -10,12 +10,14 @@ from board import Board
 from JetPacker import JetPacker 
 from scenery import Scenery
 from enemy import Enemy, Bullet,Magnet
+from Dragon import Dragon
 from config import Config
 import config
 board = Board(30,500)
 board.create_board()
 
 jetpacker = JetPacker(25,0,1)
+D1=Dragon()
 jetpacker.starting_position(board.matrix)
 
 obj_scenery = Scenery()
@@ -294,7 +296,7 @@ while True:
 	# jetpacker.check_magent(board)
 	jetpacker.check_not_collision_down(board.matrix,obj_config)
 	jetpacker.check_not_collision_up(board.matrix,obj_config)
-
+	#D1.printdragon()
 	if(board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == "*"):
 		print("GAME OVER")
 		quit()
