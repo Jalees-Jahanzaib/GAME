@@ -32,4 +32,5 @@ class Config:
 
 	
 
-
+delta=0
+delta1=0

@@ -11,7 +11,7 @@ from JetPacker import JetPacker
 from scenery import Scenery
 from enemy import Enemy, Bullet,Magnet
 from config import Config
-
+import config
 board = Board(30,500)
 board.create_board()
 
@@ -49,7 +49,6 @@ for en in enemies2:
 	en.starting_position2(board.matrix)
 enemy1.starting_position3(board.matrix)
 obj_config = Config()
-
 def selfmotion():
 	if jetpacker.mode==False:
 
@@ -66,6 +65,9 @@ def selfmotion():
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
+			if jetpacker.powermode==True:
+				jetpacker.powermode=False
+				jetpacker.life+=1
 			jetpacker.life -= 1
 			board.revive(jetpacker)
 			jetpacker.did_he_die = 0
@@ -95,6 +97,8 @@ def selfmotion():
 
 		else:
 			pass
+
+
 
 
 def motion():
@@ -135,6 +139,10 @@ def motion():
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
+			if jetpacker.powermode==True:
+				print("ttt")
+				jetpacker.powermode=False
+				jetpacker.life+=1
 			jetpacker.life -= 1
 			board.revive(jetpacker)
 			jetpacker.did_he_die = 0
@@ -224,36 +232,44 @@ def motion():
 	if char=="p":
 		jetpacker.mode=True
 		jetpacker.direction=1
-	if char=="x" and varx==True:
-		varx=False
+	if char=="x" and jetpacker.keypress:
 		jetpacker.powermode=True
-		time1=time.time()
+		jetpacker.keypress=False
+		#print("y")
+		config.delta=time.time()
+		config.delta1=time.time()
 
-x=time.time()
-y=x #copy
-z=x #copy
-time=0
-varx=True
+
+x1=time.time()
+x2=time.time()
+
 startime=0
+config.delta=0
 while True:
 	if startime==0:
 		os.system('clear')
 		startime+=1
 	print('\033[0;0H',end='')
-	obj_config.rem = 150 - (round(time.time()) - round(x))
-	print("TIME REMAINING:", obj_config.rem, end = '\t \t')
-	print("LIVES:", obj_mario.life, end = '\t \t')
+	obj_config.rem = 150 - (round(time.time()) - round(x1))
+	print("TIME REMAINING:", obj_config.rem, end = ' \t \t')
+	print("LIVES:", jetpacker.life, end = '\t \t')
 	print("COINS:", obj_config.coins, end = '\t \t\n')
 
 
 
 	if(obj_config.rem==0 or jetpacker.life == 0):
-		print("GAME OVER")
+		print("GAME OVER") 
 		quit()
-	if 60 - (round(time.time()) - round(time1)) >= 0 :
-		varx=True
-	if 10 - (round(time.time()) - round(time1)) >= 0 :
-		jetpacker.powermode=True
+	if(jetpacker.powermode==True):
+		if ((10 - ((time.time()) - (config.delta))) <=0):
+			jetpacker.powermode=False
+			config.delta=0
+	if ((60 - ((time.time()) - (config.delta1))) <=0):
+		jetpacker.keypress=True
+		config.delta1=0
+	if ((3 - ((time.time()) - (x2))) <=0):
+		m1.printmagnet(board.matrix)
+	
 
 
 

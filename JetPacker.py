@@ -17,6 +17,7 @@ class JetPacker(Main_person):
 		self.coins = 0
 		self.did_he_die = 0
 		self.mode = False
+		self.keypress=True
 
 	def starting_position(self, grid):
 		

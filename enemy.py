@@ -61,7 +61,7 @@ class Magnet:
 	def printmagnet(self,grid):
 		for i in range(20,23,1):
 			for j in range(15, 18, 1):
-				grid[i][j] =Back.RED + self.shape1[i-20][j-15] + '\x1b[0m'
+				grid[i][j] =Fore.MAGENTA + self.shape1[i-20][j-15] + '\x1b[0m'
 
 	def removemagent(self,grid):
 		for i in range(20,23):
