@@ -284,7 +284,8 @@ while True:
 		board.theyllprintit(jetpacker.xcoo)
 	else:
 		board.theyllprintit(444)
-	selfmotion()
+	if D1.onboard==False:
+		selfmotion()
 	motion()
 	# m1.removemagent(board.matrix)
 	for i in bullets:
@@ -296,7 +297,9 @@ while True:
 	# jetpacker.check_magent(board)
 	jetpacker.check_not_collision_down(board.matrix,obj_config)
 	jetpacker.check_not_collision_up(board.matrix,obj_config)
-	#D1.printdragon()
+	if jetpacker.xcoo>=390:
+		D1.printdragon()
+		D1.onboard=True
 	if(board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == "*"):
 		print("GAME OVER")
 		quit()
