@@ -19,7 +19,7 @@ class Scenery:
 			
 
 	def create_clouds(self,grid,c,d):
-		with open("./background/cloud3.txt") as obj:
+		with open("./clouds.txt") as obj:
 			for line in obj:
 				self.__cloud.append(line.strip('\n'))
 
