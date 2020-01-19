@@ -10,7 +10,7 @@ from board import Board
 from JetPacker import JetPacker 
 from scenery import Scenery
 from enemy import Enemy, Bullet,Magnet
-from Dragon import Dragon
+from Dragon import Dragon,DragonFire
 from config import Config
 import config
 board = Board(30,500)
@@ -18,6 +18,7 @@ board.create_board()
 
 jetpacker = JetPacker(25,0,1)
 D1=Dragon()
+D2=[]
 jetpacker.starting_position(board.matrix)
 
 obj_scenery = Scenery()
@@ -244,6 +245,7 @@ def motion():
 
 x1=time.time()
 x2=time.time()
+x3=0
 
 startime=0
 config.delta=0
@@ -292,14 +294,21 @@ while True:
 		i.bullethits(board.matrix)
 	for i in bullets:
 		i.move(board.matrix)
-	
+	x3+=1
 	jetpacker.check_enemy_collision(board)
 	# jetpacker.check_magent(board)
 	jetpacker.check_not_collision_down(board.matrix,obj_config)
 	jetpacker.check_not_collision_up(board.matrix,obj_config)
 	if jetpacker.xcoo>=390:
-		D1.printdragon()
+		D1.reprintdragon(jetpacker)
+		D1.movement(jetpacker)
 		D1.onboard=True
+		if x3%30==1:
+			x4=DragonFire(jetpacker)
+			D2.append(x4)
+		for i in D2:
+			i.move(board.matrix,jetpacker)
+
 	if(board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == "*"):
 		print("GAME OVER")
 		quit()
@@ -313,7 +322,7 @@ while True:
 		jetpacker.ycoo+=1
 		jetpacker.reapper(board)
 
-	if(jetpacker.xcoo==497):
+	if(jetpacker.xcoo>497):
 		print("NOICE!")
 		
 		break;
