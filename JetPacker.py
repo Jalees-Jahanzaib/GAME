@@ -1,6 +1,6 @@
 import random
 import os
-from colorama import init, Fore,Back
+from colorama import init, Fore,Back,Style
 init()
 from enemy import Main_person
 class JetPacker(Main_person):
@@ -12,7 +12,7 @@ class JetPacker(Main_person):
 		self.__shape2 = [ [" ", 'O', " "], [">", "|", "]"], [" ", "^", " "] ]
 		self.__shape3=[["!","!",'!'],["!","!",'!'],["!","!",'!']]
 		self.powermode=False
-		self.life = 5
+		self.life = 100
 		self.allowed_collision = [ " ", Fore.YELLOW+"$"+'\x1b[0m' ]
 		self.coins = 0
 		self.did_he_die = 0
@@ -23,7 +23,9 @@ class JetPacker(Main_person):
 		
 		for i in range(25,28,1):
 			for j in range(0, 3, 1):
-				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.BLACK
+				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.YELLOW
+				Style.RESET_ALL
+
 
 	def check_not_collision_right(self, grid):
 		
@@ -97,24 +99,22 @@ class JetPacker(Main_person):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
 				if self.direction == 1 and self.powermode==False:
-						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.BLACK
+						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.YELLOW
+						Style.RESET_ALL
 				elif self.direction == -1 and self.powermode==False:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.BLACK
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.YELLOW
+					Style.RESET_ALL
+
 				elif  self.powermode==True:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.BLACK
-				
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.YELLOW
+					Style.RESET_ALL
+
 	def check_enemy_collision(self, obj_board):
 		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Back.RED + '+' + Back.RESET # simulate gravity
 		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Back.RED + '+' + Back.RESET
 		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==Back.RED + '+' + Back.RESET):
 			self.life -= 1
 			obj_board.revive(self)
-			self.did_he_die = 0
-	def check_money(self, obj_config, obj_board):
-		if(obj_board.matrix[self.ycoo+3][self.xcoo]=="$"# simulate gravity
-		or obj_board.matrix[self.ycoo+3][self.xcoo+1]=="$"
-		or obj_board.matrix[self.ycoo+3][self.xcoo+2]=="$"):
-			obj_config.coins_up(obj_board.matrix,self)
 			self.did_he_die = 0
 
 		

@@ -307,7 +307,7 @@ while True:
 			x4=DragonFire(jetpacker)
 			D2.append(x4)
 		for i in D2:
-			i.move(board.matrix,jetpacker)
+			i.move(board.matrix,jetpacker,board)
 
 	if(board.matrix[jetpacker.ycoo-1][jetpacker.xcoo+1] == "*"):
 		print("GAME OVER")

@@ -31,19 +31,28 @@ class DragonFire:
         self.xcoo=495
         self.num=0
         
-    def put_bullet(self,grid,jetpacker):
-        if self.xcoo-4>=0:
+    def put_bullet(self,grid,jetpacker,board):
+        if self.xcoo-1=="o" or self.xcoo-1 =="<" or self.xcoo-1=="^" or self.num-1=="o" or self.num-1 =="<" or self.num-1=="^":
+            if jetpacker.powermode==True:
+                jetpacker.powermode=False
+                jetpacker.life+=1
+            jetpacker.life -= 1
+            board.revive(jetpacker)
+            jetpacker.did_he_die = 0
+        
+        if self.xcoo-1>=0:
             self.xcoo=self.xcoo-1
+        
         if self.num==0:
-            self.num=jetpacker.ycoo       
-            grid[jetpacker.ycoo][self.xcoo] = self.shape1
+            self.num=jetpacker.ycoo+1       
+            grid[jetpacker.ycoo+1][self.xcoo] = self.shape1
         else:
             grid[self.num][self.xcoo] = self.shape1
     def removebullet(self,grid,jetpacker):
         grid[self.num][self.xcoo] = " "
-    def move(self,grid,jetpacker):
+    def move(self,grid,jetpacker,board):
         self.removebullet(grid,jetpacker)
-        self.put_bullet(grid,jetpacker)
+        self.put_bullet(grid,jetpacker,board)
 
         
                 
