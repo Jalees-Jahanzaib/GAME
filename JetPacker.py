@@ -1,6 +1,6 @@
 import random
 import os
-from colorama import init, Fore,Back,Style
+from colorama import init, Fore,Back
 init()
 from enemy import Main_person
 class JetPacker(Main_person):
@@ -23,9 +23,7 @@ class JetPacker(Main_person):
 		
 		for i in range(25,28,1):
 			for j in range(0, 3, 1):
-				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.YELLOW
-				Style.RESET_ALL
-
+				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.BLACK
 
 	def check_not_collision_right(self, grid):
 		
@@ -99,16 +97,12 @@ class JetPacker(Main_person):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
 				if self.direction == 1 and self.powermode==False:
-						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.YELLOW
-						Style.RESET_ALL
+						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.BLACK
 				elif self.direction == -1 and self.powermode==False:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.YELLOW
-					Style.RESET_ALL
-
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.BLACK
 				elif  self.powermode==True:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.YELLOW
-					Style.RESET_ALL
-
+					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.BLACK
+				
 	def check_enemy_collision(self, obj_board):
 		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Back.RED + '+' + Back.RESET # simulate gravity
 		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Back.RED + '+' + Back.RESET
@@ -117,7 +111,6 @@ class JetPacker(Main_person):
 			obj_board.revive(self)
 			self.did_he_die = 0
 
-		
 		
 
 
