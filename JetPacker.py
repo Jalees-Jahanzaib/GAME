@@ -50,8 +50,8 @@ class JetPacker(Main_person):
 
 			return 1
 
-		elif (grid[self.ycoo + 1][self.xcoo - 1] == Back.RED + '+' + Back.RESET
-			or grid[self.ycoo+2][self.xcoo - 1] == Back.RED + '+' + Back.RESET  or grid[self.ycoo][self.xcoo - 1] == Back.RED + '+' + Back.RESET):
+		elif (grid[self.ycoo + 1][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET
+			or grid[self.ycoo+2][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET  or grid[self.ycoo][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET):
 			
 			return 2
 
@@ -104,14 +104,17 @@ class JetPacker(Main_person):
 					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.BLACK
 				
 	def check_enemy_collision(self, obj_board):
-		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Back.RED + '+' + Back.RESET # simulate gravity
-		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Back.RED + '+' + Back.RESET
-		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==Back.RED + '+' + Back.RESET):
+		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Fore.RED + '+' + Fore.RESET # simulate gravity
+		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Fore.RED + '+' + Fore.RESET
+		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==Fore.RED + '+' + Back.RESET):
 			self.life -= 1
 			obj_board.revive(self)
 			self.did_he_die = 0
+	def check_in_canvas(self,obj_board):
+		if self.xcoo<=obj_board.canvas:
+			self.xcoo=obj_board.canvas
+		return self.xcoo
 
-		
 
 
 

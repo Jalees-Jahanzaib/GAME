@@ -7,7 +7,7 @@ init()
 class Scenery:
     def __init__(self):
         self.__sky = Fore.RED + "^" + '\033[42m' + '\033[0m'
-        self.brick_score = 5
+        self.brick_score = 51
         self.__ground1 = Fore.GREEN + "^" + '\x1b[0m'
         self.__cloud = []
 

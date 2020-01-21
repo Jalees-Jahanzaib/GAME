@@ -3,7 +3,7 @@ import os
 import time
 from colorama import init, Fore, Back
 init()
-
+from random import randint
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
 from board import Board
@@ -25,291 +25,248 @@ obj_scenery = Scenery()
 m1 = Magnet()
 obj_scenery.create_ground(board.matrix)
 obj_scenery.create_sky(board.matrix)
-obj_scenery.create_clouds(board.matrix, 2, 11)
+#bj_scenery.create_clouds(board.matrix, 2, 11)
 obj_scenery.create_coins_platforms(board)
-enemy1 = Enemy(20, 70, 1)
-enemy2 = Enemy(20, 210, 1)
-enemy3 = Enemy(20, 280, 1)
-enemy4 = Enemy(20, 350, 1)
-enemy5 = Enemy(20, 400, 1)
-enemy11 = Enemy(20, 150, 1)
-enemy21 = Enemy(20, 240, 1)
-enemy31 = Enemy(20, 100, 1)
+
 bullets = []
 enemies = []
-# enemies.append(enemy1)
-enemies.append(enemy2)
-enemies.append(enemy3)
-enemies.append(enemy4)
-enemies.append(enemy5)
-enemies2 = []
-enemies2.append(enemy11)
-enemies2.append(enemy21)
-enemies2.append(enemy31)
-for en in enemies:
-    en.starting_position1(board.matrix)
-for en in enemies2:
-    en.starting_position2(board.matrix)
-enemy1.starting_position3(board.matrix)
+listx=[]
+listy=[]
+
+for i in range(0, 25):
+	intnum = randint(1, 3)
+	intx = randint(10, 300)
+	inty = randint(10, 20)
+	listx.append(intx)
+	listy.append(inty)
+	inte = Enemy(inty, intx, 1)
+	inte.create_fire(intnum, board.matrix)
+	enemies.append(inte)
+
 obj_config = Config()
 
+def savemando():
+	obj_config.coins_right(board.matrix, jetpacker)
 
-def selfmotion():
-    if jetpacker.mode == False:
+	can_he = jetpacker.check_not_collision_right(board.matrix)
 
-        obj_config.coins_right(board.matrix, jetpacker)
+	if can_he == 1:
+		jetpacker.remove_jp(board)
+		#jetpacker.xcoo += 3
+		#jetpacker.direction = 1
+		jetpacker.reapper(board)
 
-        can_he = jetpacker.check_not_collision_right(board.matrix)
+	elif can_he == 2:
+		jetpacker.life -= 1
+		board.revive(jetpacker)
+		jetpacker.did_he_die = 0
 
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo += 1
-            jetpacker.direction = 1
-            jetpacker.reapper(board)
+	else:
+		pass
+	
+def motion(x5):
+	def alarmhandler(signum, frame):
 
-        elif can_he == 2:
-            if jetpacker.powermode == True:
-                jetpacker.powermode = False
-                jetpacker.life += 1
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
+		raise AlarmException
 
-        else:
-            pass
-    elif jetpacker.mode == True:
+	def user_input(timeout=0.15):
+		signal.signal(signal.SIGALRM, alarmhandler)
+		signal.setitimer(signal.ITIMER_REAL, timeout)
 
-        obj_config.coins_right(board.matrix, jetpacker)
+		try:
+			text = getChar()()
+			signal.alarm(0)
+			return text
+		except AlarmException:
+			pass
+		signal.signal(signal.SIGALRM, signal.SIG_IGN)
+		return ''
 
-        can_he = jetpacker.check_not_collision_right(board.matrix)
+	char = user_input()
 
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo += 3
-            jetpacker.direction = 1
-            jetpacker.reapper(board)
+	if char == 'd' and jetpacker.mode == False:
+		m1.printmagnet(board.matrix)
+		obj_config.coins_right(board.matrix, jetpacker)
+		can_he = jetpacker.check_not_collision_right(board.matrix)
+		if can_he == 1:
+			jetpacker.remove_jp(board)
+			jetpacker.xcoo += 1
+			jetpacker.direction = 1
+			jetpacker.reapper(board)
 
-        elif can_he == 2:
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
+		elif can_he == 2:
+			if jetpacker.powermode == True:
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
+			jetpacker.life -= 1
+			board.revive(jetpacker)
+			jetpacker.did_he_die = 0
 
-        else:
-            pass
+		else:
+			pass
+	if char == 'd' and jetpacker.mode == True:
+		m1.printmagnet(board.matrix)
+		obj_config.coins_right(board.matrix, jetpacker)
 
+		can_he = jetpacker.check_not_collision_right(board.matrix)
 
-def motion():
-    ''' moves Mario'''
-    def alarmhandler(signum, frame):
-        ''' input method '''
-        raise AlarmException
+		if can_he == 1:
+			jetpacker.remove_jp(board)
+			jetpacker.xcoo += 3
+			jetpacker.direction = 1
+			jetpacker.reapper(board)
 
-    def user_input(timeout=0.15):
-        ''' input method '''
-        signal.signal(signal.SIGALRM, alarmhandler)
-        signal.setitimer(signal.ITIMER_REAL, timeout)
+		elif can_he == 2:
+			jetpacker.life -= 1
+			board.revive(jetpacker)
+			jetpacker.did_he_die = 0
 
-        try:
-            text = getChar()()
-            signal.alarm(0)
-            return text
-        except AlarmException:
-            pass
-        signal.signal(signal.SIGALRM, signal.SIG_IGN)
-        return ''
+		else:
+			pass
+	if char == 'a' and jetpacker.mode == False:
 
-    char = user_input()
+		obj_config.coins_left(board.matrix, jetpacker)
+		can_he = jetpacker.check_not_collision_left(board.matrix)
 
-    if char == 'd' and jetpacker.mode == False:
-        m1.printmagnet(board.matrix)
+		if can_he == 1:
+			jetpacker.remove_jp(board)
+			jetpacker.xcoo -= 2
+			jetpacker.direction = -1
+			jetpacker.reapper(board)
 
-        obj_config.coins_right(board.matrix, jetpacker)
+		elif can_he == 2:
+			jetpacker.life -= 1
+			board.revive(jetpacker)
+			jetpacker.did_he_die = 0
 
-        can_he = jetpacker.check_not_collision_right(board.matrix)
+		else:
+			pass
+	if char == 'a' and jetpacker.mode == True:
 
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo += 1
-            jetpacker.direction = 1
-            jetpacker.reapper(board)
+		obj_config.coins_left(board.matrix, jetpacker)
+		can_he = jetpacker.check_not_collision_left(board.matrix)
 
-        elif can_he == 2:
-            if jetpacker.powermode == True:
-                print("ttt")
-                jetpacker.powermode = False
-                jetpacker.life += 1
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
+		if can_he == 1:
+			jetpacker.remove_jp(board)
+			jetpacker.xcoo -= 3
+			jetpacker.direction = -1
+			jetpacker.reapper(board)
 
-        else:
-            pass
-    if char == 'd' and jetpacker.mode == True:
-        m1.printmagnet(board.matrix)
-        obj_config.coins_right(board.matrix, jetpacker)
+		elif can_he == 2:
+			jetpacker.life -= 1
+			board.revive(jetpacker)
+			jetpacker.did_he_die = 0
 
-        can_he = jetpacker.check_not_collision_right(board.matrix)
+		else:
+			pass
+	if char == 'q':
+		quit()
 
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo += 3
-            jetpacker.direction = 1
-            jetpacker.reapper(board)
+	if char == 'w':
+		prev_ycoo = jetpacker.ycoo
+		x5+=1
+		if x5%3==0:
 
-        elif can_he == 2:
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
+			
 
-        else:
-            pass
-    if char == 'a' and jetpacker.mode == False:
+			while (jetpacker.ycoo != prev_ycoo - 8
+				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " "
+				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " "
+				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo] == " "):
 
-        obj_config.coins_left(board.matrix, jetpacker)
-        can_he = jetpacker.check_not_collision_left(board.matrix)
-
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo -= 2
-            jetpacker.direction = -1
-            jetpacker.reapper(board)
-
-        elif can_he == 2:
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
-
-        else:
-            pass
-    if char == 'a' and jetpacker.mode == True:
-
-        obj_config.coins_left(board.matrix, jetpacker)
-        can_he = jetpacker.check_not_collision_left(board.matrix)
-
-        if can_he == 1:
-            jetpacker.remove_jp(board)
-            jetpacker.xcoo -= 3
-            jetpacker.direction = -1
-            jetpacker.reapper(board)
-
-        elif can_he == 2:
-            jetpacker.life -= 1
-            board.revive(jetpacker)
-            jetpacker.did_he_die = 0
-
-        else:
-            pass
-    if char == 'q':
-        quit()
-
-    if char == 'w':
-
-        prev_ycoo = jetpacker.ycoo
-
-        while (jetpacker.ycoo != prev_ycoo - 8
-               and  # 8 units; checking if there's anything above
-               board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " " and
-               board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " " and
-               board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo] == " "):
-
-            jetpacker.remove_jp(board)
-            jetpacker.ycoo -= 1
-
-    if char == "m":
-        en1 = Bullet(jetpacker.direction, jetpacker.xcoo, jetpacker.ycoo)
-        en1.put_bullet(board.matrix)
-        bullets.append(en1)
-    if char == "p":
-        jetpacker.mode = True
-        jetpacker.direction = 1
-    if char == "x" and jetpacker.keypress:
-        jetpacker.powermode = True
-        jetpacker.keypress = False
-        #print("y")
-        config.delta = time.time()
-        config.delta1 = time.time()
+				jetpacker.remove_jp(board)
+				jetpacker.ycoo -= 1
+	
+	if char == "m":
+		en1 = Bullet(jetpacker.direction, jetpacker.xcoo, jetpacker.ycoo)
+		en1.put_bullet(board.matrix)
+		bullets.append(en1)
+	if char == "p":
+		jetpacker.mode = True
+		jetpacker.direction = 1
+	if char == "x" and jetpacker.keypress:
+		jetpacker.powermode = True
+		jetpacker.keypress = False
+		config.delta = time.time()
+		config.delta1 = time.time()
 
 
 x1 = time.time()
 x2 = time.time()
 x3 = 0
-
+x4 = 0
+x5=0
 startime = 0
 config.delta = 0
 while True:
-    if startime == 0:
-        os.system('clear')
-        startime += 1
-    print('\033[0;0H', end='')
-    obj_config.rem = 150 - (round(time.time()) - round(x1))
-    print("TIME REMAINING:", obj_config.rem, end=' \t \t')
-    print("LIVES:", jetpacker.life, end=' \t \t')
-    print("COINS:", obj_config.coins, end='\t \t\n')
+	if startime == 0:
+		os.system('clear')
+		startime += 1
+	print('\033[0;0H', end='')
+	obj_config.rem = 150 - (round(time.time()) - round(x1))
+	print("TIME REMAINING:", obj_config.rem, end=' \t \t')
+	print("LIVES:", jetpacker.life, end=' \t \t')
+	print("COINS:", obj_config.coins, end='\t \t')
+	print("Dragon Life:", D1.life, end='\t \t')
 
-    if (obj_config.rem == 0 or jetpacker.life == 0):
-        print("GAME OVER")
-        quit()
-    if (jetpacker.powermode == True):
-        if ((10 - ((time.time()) - (config.delta))) <= 0):
-            jetpacker.powermode = False
-            config.delta = 0
-    if ((60 - ((time.time()) - (config.delta1))) <= 0):
-        jetpacker.keypress = True
-        config.delta1 = 0
-    if ((3 - ((time.time()) - (x2))) <= 0):
-        m1.printmagnet(board.matrix)
+	if (obj_config.rem == 0 or jetpacker.life == 0):
+		print("GAME OVER")
+		quit()
+	if (jetpacker.powermode == True):
+		if ((10 - ((time.time()) - (config.delta))) <= 0):
+			jetpacker.powermode = False
+			config.delta = 0
+	if ((60 - ((time.time()) - (config.delta1))) <= 0):
+		jetpacker.keypress = True
+		config.delta1 = 0
+	if ((3 - ((time.time()) - (x2))) <= 0):
+		m1.printmagnet(board.matrix)
 
-    # if(jetpacker.xcoo<55):
-    board.theyllprintit()
-    # elif(jetpacker.xcoo>=55 and jetpacker.xcoo<444):
-    # 	board.theyllprintit(jetpacker.xcoo)
-    # else:
-    # 	board.theyllprintit(444)
-    # # if D1.onboard==False:
-    # 	selfmotion()
-    motion()
-    # m1.removemagent(board.matrix)
-    for i in bullets:
-        for en in enemies:
-            i.bullethits(board.matrix, en)
-    for i in bullets:
-        for en in enemies2:
-            i.bullethits(board.matrix, en)
-    # for i in bullets:
-    # 	for en in enemies2
-    # 		i.bullethits(board.matrix,en)
-    for i in bullets:
-        i.move(board.matrix)
-    x3 += 1
-    jetpacker.check_enemy_collision(board)
-    # jetpacker.check_magent(board)
-    jetpacker.check_not_collision_down(board.matrix, obj_config)
-    jetpacker.check_not_collision_up(board.matrix, obj_config)
-    if jetpacker.xcoo >= 390:
-        D1.reprintdragon(jetpacker)
-        D1.movement(jetpacker)
-        D1.onboard = True
-        if x3 % 30 == 1:
-            x4 = DragonFire(jetpacker)
-            D2.append(x4)
-        for i in D2:
-            i.move(board.matrix, jetpacker, board)
+	board.theyllprintit()
 
-    if (board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == "*"):
-        print("GAME OVER")
-        quit()
+	motion(x5)
 
-    if (board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo] ==
-            " "  # simulate gravity
-            and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 1] == " "
-            and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 2] == " "
-            and True):
+	for i in bullets:
+		D1.hitdragon(i,board)
+		for en in enemies:
+			i.bullethits(board.matrix, en,listx,listy)
+	x4 = jetpacker.check_in_canvas(board)
+	savemando()
+	for i in bullets:
+		if i.xcoo <= 499:
+			i.move(board.matrix)
+	x3 += 1
+	jetpacker.check_enemy_collision(board)
+	# jetpacker.check_magent(board)
+	jetpacker.check_not_collision_down(board.matrix, obj_config)
+	jetpacker.check_not_collision_up(board.matrix, obj_config)
+	if jetpacker.xcoo >= 50:
+		D1.reprintdragon(jetpacker)
+		D1.movement(jetpacker)
+		D1.onboard = True
+		
+		if x3 % 30 == 1:
+			x4 = DragonFire(jetpacker)
+			D2.append(x4)
+		for i in D2:
+			i.move(board.matrix, jetpacker, board)
 
-        jetpacker.remove_jp(board)
-        jetpacker.ycoo += 1
-        jetpacker.reapper(board)
+	if (board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == "*"):
+		print("GAME OVER")
+		quit()
 
-    if (jetpacker.xcoo > 497):
-        print("NOICE!")
+	if (board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo] ==
+			" "  # simulate gravity
+			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 1] == " "
+			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 2] == " "
+			and True):
 
-        break
+		jetpacker.remove_jp(board)
+		jetpacker.ycoo += 1
+		jetpacker.reapper(board)
+
+	if (jetpacker.xcoo > 497 or not D1.living()):
+		print("NOICE!")
+
+		break
