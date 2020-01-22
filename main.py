@@ -5,25 +5,25 @@ from random import randint
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
 from board import Board
-from JetPacker import JetPacker
-from scenery import Scenery
-from enemy import Enemy, Bullet, Magnet
 from Dragon import Dragon, DragonFire
 from config import Config
 import config
-
+from JetPacker import JetPacker
+from scenery import Scenery
+from beams import Enemy, Bullet, Magnet
+deltaoperator=0
 def savemando():
 	obj_config.coins_right(board.matrix, jetpacker)
 
 	can_he = jetpacker.check_not_collision_right(board.matrix)
 
-	if can_he == 1:
+	if can_he == 1+deltaoperator:
 		jetpacker.remove_jp(board)
 		#jetpacker.xcoo += 3
 		#jetpacker.direction = 1
 		jetpacker.reapper(board)
 
-	elif can_he == 2:
+	elif can_he == 2+ deltaoperator:
 		if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
 				jetpacker.set_powermode(False)
@@ -38,30 +38,29 @@ def savemando():
 # filename = 'audio.mp3'
 # wave_obj = sa.WaveObject.from_wave_file(filename)
 # play_obj = wave_obj.play()
-board = Board(30, 500)
+board = Board(30+deltaoperator, 500)
 board.create_board()
 
-jetpacker = JetPacker(25, 0, 1)
+jetpacker = JetPacker(25+deltaoperator, 0, 1)
 D1 = Dragon()
 D2 = []
 jetpacker.starting_position(board.matrix)
 
 obj_scenery = Scenery()
-#m1 = Magnet()
 obj_scenery.create_ground(board.matrix)
+bullets = []
 obj_scenery.create_sky(board.matrix)
-#bj_scenery.create_clouds(board.matrix, 2, 11)
 obj_scenery.create_coins_platforms(board)
 obj_scenery.create_magnet(board)
-bullets = []
+
 enemies = []
 listx=[]
 listy=[]
 
-for i in range(0, 25):
+for i in range(0, 40):
 	intnum = randint(1, 3)
-	intx = randint(10, 300)
-	inty = randint(10, 20)
+	intx = randint(10, 450)
+	inty = randint(10, 25)
 	listx.append(intx)
 	listy.append(inty)
 	inte = Enemy(inty, intx, 1)
@@ -95,13 +94,13 @@ def motion(x5):
 		#m1.printmagnet(board.matrix)
 		obj_config.coins_right(board.matrix, jetpacker)
 		can_he = jetpacker.check_not_collision_right(board.matrix)
-		if can_he == 1:
+		if can_he == 1+deltaoperator:
 			jetpacker.remove_jp(board)
 			jetpacker.xcoo += 1
 			jetpacker.direction = 1
 			jetpacker.reapper(board)
 
-		elif can_he == 2:
+		elif can_he == 2+deltaoperator:
 			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
 				jetpacker.set_powermode(False)
@@ -118,13 +117,13 @@ def motion(x5):
 
 		can_he = jetpacker.check_not_collision_right(board.matrix)
 
-		if can_he == 1:
+		if can_he == 1+deltaoperator:
 			jetpacker.remove_jp(board)
 			jetpacker.xcoo += 3
 			jetpacker.direction = 1
 			jetpacker.reapper(board)
 
-		elif can_he == 2:
+		elif can_he == 2+deltaoperator:
 			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
 				jetpacker.set_powermode(False) 
@@ -140,15 +139,14 @@ def motion(x5):
 		obj_config.coins_left(board.matrix, jetpacker)
 		can_he = jetpacker.check_not_collision_left(board.matrix)
 
-		if can_he == 1:
+		if can_he == 1+deltaoperator:
 			jetpacker.remove_jp(board)
 			jetpacker.xcoo -= 2
 			jetpacker.direction = -1
 			jetpacker.reapper(board)
 
-		elif can_he == 2:
+		elif can_he == 2+deltaoperator:
 			if jetpacker.get_powermode() == True: # powermode is for the shield
-				print("ttt")
 				jetpacker.set_powermode(False)
 				jetpacker.set_life(jetpacker.get_life()+1)
 			jetpacker.set_life(jetpacker.get_life()-1)	
@@ -162,13 +160,13 @@ def motion(x5):
 		obj_config.coins_left(board.matrix, jetpacker)
 		can_he = jetpacker.check_not_collision_left(board.matrix)
 
-		if can_he == 1:
+		if can_he == 1+deltaoperator:
 			jetpacker.remove_jp(board)
 			jetpacker.xcoo -= 3
 			jetpacker.direction = -1
 			jetpacker.reapper(board)
 
-		elif can_he == 2:
+		elif can_he == 2+deltaoperator:
 			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
 				jetpacker.set_powermode(False)
@@ -188,10 +186,9 @@ def motion(x5):
 		prev_ycoo = jetpacker.ycoo
 		#jetpacker.check_not_collision_downstar(board.matrix,board)
 		while (jetpacker.ycoo != prev_ycoo - 8
-			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " "
-			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " "
-			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo] == " "):
-
+			and board.matrix[jetpacker.ycoo - 1+deltaoperator][jetpacker.xcoo + 2] == " "
+			and board.matrix[jetpacker.ycoo - 1+deltaoperator][jetpacker.xcoo + 1] == " "
+			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo+deltaoperator] == " "):
 			jetpacker.remove_jp(board)
 			jetpacker.ycoo -= 1
 
@@ -241,10 +238,10 @@ while True:
 	time.sleep(0.05)
 	print('\033[0;0H', end='')
 	obj_config.set_rem(216 - (round(time.time()) - round(x1)))
-	print("TIME REMAINING:", obj_config.get_rem(), end=' \t \t')
-	print("LIVES:", jetpacker.get_life(), end=' \t \t')
-	print("COINS:", obj_config.get_coins(), end='\t \t')
-	print("Dragon Life:", D1.get_life(), end='\t \t')
+	print("LIVES:", jetpacker.get_life(), end=' \t\t\t')
+	print("Dragon Life:", D1.get_life(), end=' \t\t\t')
+	print("TIME REMAINING:", obj_config.get_rem(), end=' \t\t\t')
+	print("COINS:", obj_config.get_coins(), end=' \t\t\t')
 	# for i in range(0,len(listx)):
 	# 	print(listx[i],end='\n')
 
@@ -261,7 +258,7 @@ while True:
 		config.delta1 = 0
 	#m1.printmagnet(board.matrix)
 
-	board.theyllprintit(jetpacker)
+	board.printboard(jetpacker)
 
 	motion(x5)
 
@@ -304,5 +301,6 @@ while True:
 		os.system('clear')
 
 		print("NOICE!")
+		print("I CANT BELEIVE IT BUT YOU WON!\n")
 
 		break

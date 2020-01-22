@@ -1,25 +1,25 @@
 import colors 
 import random
 import os
-import enemy
+import beams as enemy
 
 
 
 class Scenery:
     def __init__(self):
         self.__sky = colors.color_text("^","Blue") #Fore.RED + "^" + '\033[42m' + '\033[0m'
-        self.brick_score = 51
         self.__ground1 = colors.color_text("^",'Water Color')#'' + "^" + '\x1b[0m'
         self.__cloud = []
+        self.__check=0
 
     def create_ground(self, grid):
         for i in range(500):
-            grid[29][i] = self.__ground1
-            grid[28][i] = colors.color_text("^","Water Color") #+ "^" + '\x1b[0m'
+            grid[29+self.__check][i] = self.__ground1
+            grid[28+self.__check][i+self.__check] = colors.color_text("^","Water Color") #+ "^" + '\x1b[0m'
 
     def create_sky(self, grid):
-        for i in range(500):
-            grid[1][i] = self.__sky
+        for i in range(500+self.__check):
+            grid[1][i+self.__check] = self.__sky
 
     def create_coins_platforms(self, obj_board):
 

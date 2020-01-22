@@ -2,19 +2,23 @@ import os
 from random import randint
 import colors
 import config
-class Main_person:
+class Structure:
 	def __init__(self, ycoo, xcoo, dire):
 		self.xcoo = xcoo
 		self.ycoo = ycoo
+		self.checkdir=0
 		self.shape3 = [["+", " ", " "], [" ", "+", " "], [" ", " ", "+"]]
 		self.direction = dire
+		self.checklim=0
 
-
-class Enemy(Main_person):
+listcheck=[]
+class Enemy(Structure):
 	def __init__(self, ycoo, xcoo,dire):
-		Main_person.__init__(self, ycoo, xcoo,dire)
+		Structure.__init__(self, ycoo, xcoo,dire)
 		self.allowed_collision = [" "]
 		self.dire=dire
+
+	listcheck.append("1")
 	def create_fire(self,num,grid):
 		if num==1:
 			self.starting_position1(grid)
@@ -22,14 +26,17 @@ class Enemy(Main_person):
 			self.starting_position2(grid)
 		elif num==3:
 			self.starting_position3(grid)
+
+	listcheck.append("2")	
 	def starting_position1(self, grid):
 		for i in range(self.ycoo, self.ycoo + 4):
 			grid[i][self.xcoo] = colors.color_text('+',"Red")
 
+	listcheck.append("4")	
 	def starting_position2(self, grid):
 		for i in range(self.xcoo, self.xcoo + 6):
 			grid[self.ycoo][i] = colors.color_text('+',"Red")
-
+	listcheck.append("5")	
 	def starting_position3(self, grid):
 		for i in range(self.ycoo, self.ycoo + 3, 1):
 			for j in range(self.xcoo, self.xcoo + 3, 1):
@@ -51,17 +58,20 @@ class Enemy(Main_person):
 
 class Bullet:
 	def __init__(self, dire, xcoo, ycoo):
+		self.speed=0
+		self.accel=0
 		self.direction = dire
 		self.shape1 = '0'
 		self.xcoo = xcoo
 		self.ycoo = ycoo
+	listcheck.append("31")	
 
 	def put_bullet(self, grid):
 		if self.xcoo + 4 <= 499:
 			self.xcoo = self.xcoo + 1
 
 			grid[self.ycoo][self.xcoo] = self.shape1
-
+	listcheck.append("32")
 	def removebullet(self, grid):
 
 		grid[self.ycoo][self.xcoo] = " "
