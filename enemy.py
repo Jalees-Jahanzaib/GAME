@@ -73,15 +73,22 @@ class Bullet:
 		if self.xcoo<=499:
 			self.removebullet(grid)
 			self.put_bullet(grid)
+	# def killbullet(self,bullet):
+	# 	bullet.remove(self)
 
-	def bullethits(self, grid, wall,listx,listy):
+	def bullethits(self, grid,bullet):
+	
 		if grid[self.ycoo][self.xcoo+1]=="+":
-			for idx,i in listx:
-				if xcoo+1 == i or xcoo+2 ==i or xcoo+3 ==i :
-					getx=i
-					indexnum=idx
-			for i in range(getx, getx + 6):
-				grid[listy[idx]][i] = " "		
+			# self.killbullet(bullet)
+			return 1
+			# getx=-1
+			# for i in listx:
+			# 	if xcoo+1 == i  :
+			# 		getx=i
+			# 		self.killbullet(bullet)
+			# if getx!=-1:
+			# 	for i in range(getx, getx + 6):
+			# 		grid[listy[idx]][i] = " "		
 		
 
 

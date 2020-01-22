@@ -13,6 +13,11 @@ from enemy import Enemy, Bullet, Magnet
 from Dragon import Dragon, DragonFire
 from config import Config
 import config
+# import simpleaudio as sa
+
+# filename = 'audio.mp3'
+# wave_obj = sa.WaveObject.from_wave_file(filename)
+# play_obj = wave_obj.play()
 board = Board(30, 500)
 board.create_board()
 
@@ -60,9 +65,6 @@ def savemando():
 		jetpacker.life -= 1
 		board.revive(jetpacker)
 		jetpacker.did_he_die = 0
-
-	else:
-		pass
 	
 def motion(x5):
 	def alarmhandler(signum, frame):
@@ -165,19 +167,15 @@ def motion(x5):
 
 	if char == 'w':
 		prev_ycoo = jetpacker.ycoo
-		x5+=1
-		if x5%3==0:
+		jetpacker.check_not_collision_downstar(board.matrix,board)
+		while (jetpacker.ycoo != prev_ycoo - 8
+			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " "
+			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " "
+			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo] == " "):
 
-			
+			jetpacker.remove_jp(board)
+			jetpacker.ycoo -= 1
 
-			while (jetpacker.ycoo != prev_ycoo - 8
-				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " "
-				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " "
-				and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo] == " "):
-
-				jetpacker.remove_jp(board)
-				jetpacker.ycoo -= 1
-	
 	if char == "m":
 		en1 = Bullet(jetpacker.direction, jetpacker.xcoo, jetpacker.ycoo)
 		en1.put_bullet(board.matrix)
@@ -203,12 +201,15 @@ while True:
 	if startime == 0:
 		os.system('clear')
 		startime += 1
+	time.sleep(0.05)
 	print('\033[0;0H', end='')
 	obj_config.rem = 150 - (round(time.time()) - round(x1))
 	print("TIME REMAINING:", obj_config.rem, end=' \t \t')
 	print("LIVES:", jetpacker.life, end=' \t \t')
 	print("COINS:", obj_config.coins, end='\t \t')
 	print("Dragon Life:", D1.life, end='\t \t')
+	# for i in range(0,len(listx)):
+	# 	print(listx[i],end='\n')
 
 	if (obj_config.rem == 0 or jetpacker.life == 0):
 		print("GAME OVER")
@@ -230,7 +231,10 @@ while True:
 	for i in bullets:
 		D1.hitdragon(i,board)
 		for en in enemies:
-			i.bullethits(board.matrix, en,listx,listy)
+			if i.bullethits(board.matrix, bullets)==1:
+				bullets.remove(i)
+				break
+	x4 = jetpacker.check_in_canvas(board)
 	x4 = jetpacker.check_in_canvas(board)
 	savemando()
 	for i in bullets:
@@ -246,7 +250,7 @@ while True:
 		D1.movement(jetpacker)
 		D1.onboard = True
 		
-		if x3 % 30 == 1:
+		if x3 % 15 == 1:
 			x4 = DragonFire(jetpacker)
 			D2.append(x4)
 		for i in D2:

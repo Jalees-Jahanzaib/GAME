@@ -85,7 +85,21 @@ class JetPacker(Main_person):
 			grid[self.ycoo+3][self.xcoo+2]=' '
 			obj_config.coins_up(grid,self)
 			
+	def check_not_collision_downstar(self,grid, board):
+        
+		if grid[self.ycoo-1][self.xcoo]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo]==Fore.RED + '+' + Fore.RESET:
+			self.life -= 1
+			board.revive(self)
+			self.did_he_die = 0
 
+		elif grid[self.ycoo-1][self.xcoo+1]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo+1]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo+1]==Fore.RED + '+' + Fore.RESET:
+			self.life -= 1
+			board.revive(self)
+			self.did_he_die = 0
+		elif grid[self.ycoo-1][self.xcoo+2]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo+2]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo+2]==Fore.RED + '+' + Fore.RESET:
+			self.life -= 1
+			board.revive(self)
+			self.did_he_die = 0
 
 		
 	def remove_jp(self, obj_board):
@@ -111,8 +125,10 @@ class JetPacker(Main_person):
 			obj_board.revive(self)
 			self.did_he_die = 0
 	def check_in_canvas(self,obj_board):
-		if self.xcoo<=obj_board.canvas:
-			self.xcoo=obj_board.canvas
+		if self.xcoo<=obj_board.canvas+1:
+			self.remove_jp(obj_board)
+			self.xcoo=obj_board.canvas+1
+			self.reapper(obj_board)
 		return self.xcoo
 
 
