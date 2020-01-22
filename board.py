@@ -1,5 +1,7 @@
 import os
+import config
 
+	
 
 class Board:
 	def __init__(self, rows, columns):
@@ -17,10 +19,13 @@ class Board:
 				self.new.append(" ")
 			self.matrix.append(self.new)
 
-	def theyllprintit(self):
+	def theyllprintit(self,jetpacker):
 		self.time += 1
 		if self.time % 3 == 0:
 			self.canvas += 1
+			if(self.canvas>=config.magnet_xcoo- 110 and self.canvas<=config.magnet_xcoo ):
+				#savemando()
+				jetpacker.get_attracted(config.magnet_xcoo,self)
 		if (self.canvas >= 344):
 			for i in range(self.rows):
 				for j in range(444 - 55, 444 + 55):

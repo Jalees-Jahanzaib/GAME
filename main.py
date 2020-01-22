@@ -1,8 +1,6 @@
 import signal
 import os
 import time
-from colorama import init, Fore, Back
-init()
 from random import randint
 from alarmexception import AlarmException
 from getch import _getChUnix as getChar
@@ -13,42 +11,6 @@ from enemy import Enemy, Bullet, Magnet
 from Dragon import Dragon, DragonFire
 from config import Config
 import config
-# import simpleaudio as sa
-
-# filename = 'audio.mp3'
-# wave_obj = sa.WaveObject.from_wave_file(filename)
-# play_obj = wave_obj.play()
-board = Board(30, 500)
-board.create_board()
-
-jetpacker = JetPacker(25, 0, 1)
-D1 = Dragon()
-D2 = []
-jetpacker.starting_position(board.matrix)
-
-obj_scenery = Scenery()
-m1 = Magnet()
-obj_scenery.create_ground(board.matrix)
-obj_scenery.create_sky(board.matrix)
-#bj_scenery.create_clouds(board.matrix, 2, 11)
-obj_scenery.create_coins_platforms(board)
-
-bullets = []
-enemies = []
-listx=[]
-listy=[]
-
-for i in range(0, 25):
-	intnum = randint(1, 3)
-	intx = randint(10, 300)
-	inty = randint(10, 20)
-	listx.append(intx)
-	listy.append(inty)
-	inte = Enemy(inty, intx, 1)
-	inte.create_fire(intnum, board.matrix)
-	enemies.append(inte)
-
-obj_config = Config()
 
 def savemando():
 	obj_config.coins_right(board.matrix, jetpacker)
@@ -70,6 +32,45 @@ def savemando():
 		board.revive(jetpacker)
 		jetpacker.did_he_die = 0
 	
+
+# import simpleaudio as sa
+
+# filename = 'audio.mp3'
+# wave_obj = sa.WaveObject.from_wave_file(filename)
+# play_obj = wave_obj.play()
+board = Board(30, 500)
+board.create_board()
+
+jetpacker = JetPacker(25, 0, 1)
+D1 = Dragon()
+D2 = []
+jetpacker.starting_position(board.matrix)
+
+obj_scenery = Scenery()
+#m1 = Magnet()
+obj_scenery.create_ground(board.matrix)
+obj_scenery.create_sky(board.matrix)
+#bj_scenery.create_clouds(board.matrix, 2, 11)
+obj_scenery.create_coins_platforms(board)
+obj_scenery.create_magnet(board)
+bullets = []
+enemies = []
+listx=[]
+listy=[]
+
+for i in range(0, 25):
+	intnum = randint(1, 3)
+	intx = randint(10, 300)
+	inty = randint(10, 20)
+	listx.append(intx)
+	listy.append(inty)
+	inte = Enemy(inty, intx, 1)
+	inte.create_fire(intnum, board.matrix)
+	enemies.append(inte)
+
+obj_config = Config()
+
+
 def motion(x5):
 	def alarmhandler(signum, frame):
 
@@ -91,7 +92,7 @@ def motion(x5):
 	char = user_input()
 
 	if char == 'd' and jetpacker.mode == False:
-		m1.printmagnet(board.matrix)
+		#m1.printmagnet(board.matrix)
 		obj_config.coins_right(board.matrix, jetpacker)
 		can_he = jetpacker.check_not_collision_right(board.matrix)
 		if can_he == 1:
@@ -112,7 +113,7 @@ def motion(x5):
 		else:
 			pass
 	if char == 'd' and jetpacker.mode == True:
-		m1.printmagnet(board.matrix)
+		#m1.printmagnet(board.matrix)
 		obj_config.coins_right(board.matrix, jetpacker)
 
 		can_he = jetpacker.check_not_collision_right(board.matrix)
@@ -237,10 +238,9 @@ while True:
 	if ((60 - ((time.time()) - (config.delta1))) <= 0):
 		jetpacker.keypress = True
 		config.delta1 = 0
-	if ((3 - ((time.time()) - (x2))) <= 0):
-		m1.printmagnet(board.matrix)
+	#m1.printmagnet(board.matrix)
 
-	board.theyllprintit()
+	board.theyllprintit(jetpacker)
 
 	motion(x5)
 
@@ -252,7 +252,7 @@ while True:
 				break
 	x4 = jetpacker.check_in_canvas(board)
 	x4 = jetpacker.check_in_canvas(board)
-	savemando()
+	config.savemando(jetpacker,obj_config,board)
 	for i in bullets:
 		if i.xcoo <= 499:
 			i.move(board.matrix)

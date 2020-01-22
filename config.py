@@ -34,3 +34,25 @@ class Config:
 
 delta=0
 delta1=0
+magnet_xcoo=0
+
+def savemando(jetpacker,obj_config,board):
+	obj_config.coins_right(board.matrix, jetpacker)
+
+	can_he = jetpacker.check_not_collision_right(board.matrix)
+
+	if can_he == 1:
+		jetpacker.remove_jp(board)
+		#jetpacker.xcoo += 3
+		#jetpacker.direction = 1
+		jetpacker.reapper(board)
+
+	elif can_he == 2:
+		if jetpacker.powermode == True: # powermode is for the shield
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
+		jetpacker.life -= 1
+		board.revive(jetpacker)
+		jetpacker.did_he_die = 0
+	

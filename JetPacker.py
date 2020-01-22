@@ -139,9 +139,7 @@ class JetPacker(Main_person):
 					obj_board.matrix[i][j] = colors.color_text(self.__shape3[i-self.ycoo][j-self.xcoo],"Cyan") 
 				
 	def check_enemy_collision(self, obj_board):
-		if(obj_board.matrix[self.ycoo+3][self.xcoo]==colors.color_text("+","Red") # simulate gravity
-		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==colors.color_text("+","Red")
-		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==colors.color_text("+","Red")):
+		if '+' in obj_board.matrix[self.ycoo+3][self.xcoo] 			or '+' in obj_board.matrix[self.ycoo+3][self.xcoo+1]			or '+' in obj_board.matrix[self.ycoo+3][self.xcoo+2]:
 			self.life -= 1
 			obj_board.revive(self)
 			self.did_he_die = 0
@@ -151,8 +149,13 @@ class JetPacker(Main_person):
 			self.xcoo=obj_board.canvas+1
 			self.reapper(obj_board)
 		return self.xcoo
-
-
+	def get_attracted(self,x,obj_board):
+		self.remove_jp(obj_board)
+		if(self.xcoo<x):
+			self.xcoo+=5
+		elif(self.xcoo>x):
+			self.xcoo-=5
+		self.reapper(obj_board)
 
 
 

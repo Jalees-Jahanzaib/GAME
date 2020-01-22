@@ -1,7 +1,7 @@
 import os
 from random import randint
 import colors
-
+import config
 class Main_person:
 	def __init__(self, ycoo, xcoo, dire):
 		self.xcoo = xcoo
@@ -125,14 +125,20 @@ class Magnet:
 	def __init__(self):
 		self.shape1 = [["M", " ", "M"], ["M", " ", "M"], ["M", "M", "M"]]
 		self.random1 = randint(0, 5)
+		config.magnet_xcoo=self.random1+100
 
 	def printmagnet(self, grid):
-		for i in range(20 - self.random1, 23 - self.random1, 1):
-			for j in range(15 - self.random1, 18 - self.random1, 1):
-				grid[i][j] = self.shape1[i - 20 + self.random1][
-					j - 15 + self.random1]
+		
+			startie= self.random1+100
+			startje = self.random1+10
+			for i in range(3):
+				for j in range(3):
+					try:
+						grid[startje+ i][startie+j] = self.shape1[i ][j]
+					except:
+						print(i,j,len(grid),len(grid[0]))
 
 	def removemagent(self, grid):
-		for i in range(20, 23):
-			for j in range(40, 43):
+		for i in range(10, 23):
+			for j in range(40, 143):
 				grid[i][j] = " "

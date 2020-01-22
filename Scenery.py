@@ -1,6 +1,7 @@
 import colors 
 import random
 import os
+import enemy
 
 
 
@@ -14,7 +15,7 @@ class Scenery:
     def create_ground(self, grid):
         for i in range(500):
             grid[29][i] = self.__ground1
-            grid[28][i] = colors.color_text("^","Red") #+ "^" + '\x1b[0m'
+            grid[28][i] = colors.color_text("^","Water Color") #+ "^" + '\x1b[0m'
 
     def create_sky(self, grid):
         for i in range(500):
@@ -31,3 +32,6 @@ class Scenery:
             obj_board.matrix[23][i] = colors.color_text("$","Yellow")
             obj_board.matrix[21][i] = colors.color_text("$","Yellow")
             obj_board.matrix[22][i] = colors.color_text("$","Yellow")
+    def create_magnet(self,obj_board):
+        m=enemy.Magnet()
+        m.printmagnet(obj_board.matrix)
