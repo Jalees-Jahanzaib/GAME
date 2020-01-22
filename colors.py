@@ -24,15 +24,18 @@ COLORS = {
     'Moving Bridges': '\x1b[48;5;94m'
 }
 
+END_COLOR = '\033[m'
+
+
 def color_text(text, color):
+    ''' 
+    Colors the text according to the given color
+    The color can be one of the 'COLORS' in the array 'COLORS' or can be explicitly mentioned using ASCII color codes.
+    '''
     if '\x1b' in color:
-        return color + text + config.END_COLOR
+        return color + text + END_COLOR
     else:
         try:
-            letter = color[0]
-            if letter.islower():
-                letter = letter.upper()
-            color = letter + color[1:]
-            return config.COLORS[color] + text + config.END_COLOR
+            return COLORS[color] + text + END_COLOR
         except:
             return text
