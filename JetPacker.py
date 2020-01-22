@@ -144,10 +144,10 @@ class JetPacker(Main_person):
 			obj_board.revive(self)
 			self.did_he_die = 0
 	def check_in_canvas(self,obj_board):
-		if self.xcoo<=obj_board.canvas+1:
-			self.remove_jp(obj_board)
-			self.xcoo=obj_board.canvas+1
-			self.reapper(obj_board)
+		if self.xcoo<=obj_board.get_canvas()+1:
+				self.remove_jp(obj_board)
+				self.xcoo=obj_board.get_canvas()+1
+				self.reapper(obj_board)
 		return self.xcoo
 	def get_attracted(self,x,obj_board):
 		self.remove_jp(obj_board)
