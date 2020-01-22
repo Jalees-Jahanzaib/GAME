@@ -224,12 +224,13 @@ while True:
 	print("TIME REMAINING:", obj_config.rem, end=' \t \t')
 	print("LIVES:", jetpacker.life, end=' \t \t')
 	print("COINS:", obj_config.coins, end='\t \t')
-	print("Dragon Life:", D1.life, end='\t \t')
+	print("Dragon Life:", D1.get_life(), end='\t \t')
 	# for i in range(0,len(listx)):
 	# 	print(listx[i],end='\n')
 
 	if (obj_config.rem == 0 or jetpacker.life == 0):
-		print("GAME OVER")
+		os.system('clear')
+		print("\n\n\n\n\t\t\t\tGAME OVER")
 		quit()
 	if (jetpacker.powermode == True):
 		if ((10 - ((time.time()) - (config.delta))) <= 0):
@@ -287,6 +288,9 @@ while True:
 		jetpacker.reapper(board)
 
 	if (jetpacker.xcoo > 497 or not D1.living()):
+		print('\033[0;0H', end='')
+		os.system('clear')
+
 		print("NOICE!")
 
 		break
