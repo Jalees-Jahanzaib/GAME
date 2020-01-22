@@ -163,9 +163,9 @@ class JetPacker(Main_person):
 	def get_attracted(self,x,obj_board):
 		self.remove_jp(obj_board)
 		if(self.xcoo<x):
-			self.xcoo+=5
+			self.xcoo+=3
 		elif(self.xcoo>x):
-			self.xcoo-=5
+			self.xcoo-=3
 		self.reapper(obj_board)
 
 

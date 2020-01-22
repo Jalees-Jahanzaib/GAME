@@ -30,10 +30,10 @@ class Dragon:
 		self.removedragon(jetpacker)
 		self.reprintdragon(jetpacker)
 	def hitdragon(self,bullet,board):
-		#print(bullet.xcoo-board.canvas,self._ycoo- bullet.ycoo)
+		#print(bullet.xcoo-board.get_canvas(),self._ycoo- bullet.ycoo)
 		#print()
 		#if (bullet.xcoo-board.canvas==110 and self._ycoo==bullet.ycoo)           or (bullet.xcoo-board.canvas==110 and self._ycoo==bullet.ycoo-1)or (bullet.xcoo-board.canvas==110 and self._ycoo==bullet.ycoo-2) :
-		if(bullet.xcoo-board.get_canvas()==110 and self._ycoo- bullet.ycoo==2):
+		if(bullet.xcoo-board.get_canvas()==109 and self._ycoo- bullet.ycoo==2):
 			self._life-=1
 	def living(self):
 		if self._life<=0:

@@ -261,7 +261,7 @@ while True:
 	# jetpacker.check_magent(board)
 	jetpacker.check_not_collision_down(board.matrix, obj_config,board)
 	jetpacker.check_not_collision_up(board.matrix, obj_config,board)
-	if jetpacker.xcoo >= 50:
+	if jetpacker.xcoo >= 400:
 		D1.reprintdragon(jetpacker)
 		D1.movement(jetpacker)
 		D1.onboard = True

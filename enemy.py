@@ -125,11 +125,11 @@ class Magnet:
 	def __init__(self):
 		self.shape1 = [["M", " ", "M"], ["M", " ", "M"], ["M", "M", "M"]]
 		self.random1 = randint(0, 5)
-		config.magnet_xcoo=self.random1+100
+		config.magnet_xcoo=self.random1+300
 
 	def printmagnet(self, grid):
 		
-			startie= self.random1+100
+			startie= self.random1+300
 			startje = self.random1+10
 			for i in range(3):
 				for j in range(3):
