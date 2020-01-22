@@ -1,8 +1,7 @@
 import random
 import os
-from colorama import init, Fore,Back
-init()
 from enemy import Main_person
+import colors
 class JetPacker(Main_person):
 	
 	def __init__(self, ycoo, xcoo, dire): 
@@ -13,7 +12,7 @@ class JetPacker(Main_person):
 		self.__shape3=[["!","!",'!'],["!","!",'!'],["!","!",'!']]
 		self.powermode=False
 		self.life = 100
-		self.allowed_collision = [ " ", Fore.YELLOW+"$"+'\x1b[0m' ]
+		self.allowed_collision = [ " ", colors.color_text("$","Yellow") ]
 		self.coins = 0
 		self.did_he_die = 0
 		self.mode = False
@@ -23,7 +22,7 @@ class JetPacker(Main_person):
 		
 		for i in range(25,28,1):
 			for j in range(0, 3, 1):
-				grid[i][j] = Fore.CYAN + self.__shape1[i-25][j] +Back.BLACK
+				grid[i][j] = colors.color_text(self.__shape1[i-25][j] ,"Cyan")
 
 	def check_not_collision_right(self, grid):
 		
@@ -34,8 +33,7 @@ class JetPacker(Main_person):
 			return 1
 		
 		
-		elif (grid[self.ycoo + 1][self.xcoo + 3] == Back.RED + '+' + Back.RESET
-			or grid[self.ycoo+2][self.xcoo+3] == Back.RED + '+' + Back.RESET or grid[self.ycoo][self.xcoo+3] == Back.RED + '+' + Back.RESET):
+		if ('+' in grid[self.ycoo + 1][self.xcoo + 3] 			or '+' in grid[self.ycoo+2][self.xcoo+3] 			 or '+' in grid[self.ycoo][self.xcoo+3] ):
 			return 2
 	
 		else:
@@ -50,56 +48,79 @@ class JetPacker(Main_person):
 
 			return 1
 
-		elif (grid[self.ycoo + 1][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET
-			or grid[self.ycoo+2][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET  or grid[self.ycoo][self.xcoo - 1] == Fore.RED + '+' + Fore.RESET):
+		if ('+' in grid[self.ycoo + 1][self.xcoo -1] 			or '+' in grid[self.ycoo+2][self.xcoo-1] 			 or '+' in grid[self.ycoo][self.xcoo-1] ):
+
 			
 			return 2
 
 		else:
 			return 3
 
-	def check_not_collision_down(self, grid,obj_config):
+	def check_not_collision_down(self, grid,obj_config,board):
 
-		if grid[self.ycoo-1][self.xcoo]==Fore.YELLOW+ "$" +'\x1b[0m':
+		if '$' in grid[self.ycoo-1][self.xcoo]:
 			grid[self.ycoo-1][self.xcoo]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo-1][self.xcoo+1]==Fore.YELLOW+ "$" +'\x1b[0m':
+		if  '$' in grid[self.ycoo-1][self.xcoo+1]:
 			grid[self.ycoo-1][self.xcoo+1]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo-1][self.xcoo+2]==Fore.YELLOW+ "$" +'\x1b[0m':
+		if '$' in  grid[self.ycoo-1][self.xcoo+2]:
 			grid[self.ycoo-1][self.xcoo+2]=' '
 			obj_config.coins_up(grid,self)
-	def check_not_collision_up(self, grid,obj_config):
+		for i in range(3):
+			if ('+' in grid[self.ycoo -1][self.xcoo + i] 			):
+				self.life -= 1
+				board.revive(self)
+				self.did_he_die = 0
+				break
 
-		if grid[self.ycoo+3][self.xcoo]==Fore.YELLOW+ "$" +'\x1b[0m':
+	def check_not_collision_up(self, grid,obj_config,board):
+
+		if '$' in grid[self.ycoo+3][self.xcoo]: 
 			grid[self.ycoo+3][self.xcoo]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo+3][self.xcoo+1]==Fore.YELLOW+ "$" +'\x1b[0m':
+		if  '$' in grid[self.ycoo+3][self.xcoo+1]:
 			grid[self.ycoo+3][self.xcoo+1]=' '
 			obj_config.coins_up(grid,self)
 
-		elif grid[self.ycoo+3][self.xcoo+2]==Fore.YELLOW+ "$" +'\x1b[0m':
+		if  '$' in grid[self.ycoo+3][self.xcoo+2]:
 			grid[self.ycoo+3][self.xcoo+2]=' '
 			obj_config.coins_up(grid,self)
+		for i in range(3):
+			if ('+' in grid[self.ycoo +3][self.xcoo + i]):
+				self.life -= 1
+				board.revive(self)
+				self.did_he_die = 0
+				break
 			
-	def check_not_collision_downstar(self,grid, board):
-        
-		if grid[self.ycoo-1][self.xcoo]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo]==Fore.RED + '+' + Fore.RESET:
+	""" def check_not_collision_down(self,grid,obj_config, board):
+		if '$' in grid[self.ycoo-1][self.xcoo]: 
+			grid[self.ycoo+3][self.xcoo]=' '
+			obj_config.coins_up(grid,self)
+
+		elif  '$' in grid[self.ycoo-1][self.xcoo+1]:
+			grid[self.ycoo-1][self.xcoo+1]=' '
+			obj_config.coins_up(grid,self)
+
+		elif  '$' in grid[self.ycoo-1][self.xcoo+2]:
+			grid[self.ycoo-1][self.xcoo+2]=' '
+			obj_config.coins_up(grid,self)
+		if '+' in grid[self.ycoo-1][self.xcoo] or '+' in grid[self.ycoo-2][self.xcoo] or '+' in  grid[self.ycoo-3][self.xcoo]:
 			self.life -= 1
 			board.revive(self)
 			self.did_he_die = 0
 
-		elif grid[self.ycoo-1][self.xcoo+1]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo+1]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo+1]==Fore.RED + '+' + Fore.RESET:
+		elif '+' in grid[self.ycoo-1][self.xcoo+1] or '+' in  grid[self.ycoo-2][self.xcoo+1] or '+' in  grid[self.ycoo-3][self.xcoo+1]:
 			self.life -= 1
 			board.revive(self)
 			self.did_he_die = 0
-		elif grid[self.ycoo-1][self.xcoo+2]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-2][self.xcoo+2]==Fore.RED + '+' + Fore.RESET or grid[self.ycoo-3][self.xcoo+2]==Fore.RED + '+' + Fore.RESET:
+		elif '+' in grid[self.ycoo-1][self.xcoo+2] or '+' in  grid[self.ycoo-2][self.xcoo+2] or '+' in  grid[self.ycoo-3][self.xcoo+2]:
 			self.life -= 1
 			board.revive(self)
-			self.did_he_die = 0
+			self.did_he_die = 0 """
 
 		
 	def remove_jp(self, obj_board):
@@ -111,16 +132,16 @@ class JetPacker(Main_person):
 		for i in range(self.ycoo, self.ycoo+3, 1):
 			for j in range(self.xcoo, self.xcoo+3, 1):
 				if self.direction == 1 and self.powermode==False:
-						obj_board.matrix[i][j] = Fore.CYAN + self.__shape1[i-self.ycoo][j-self.xcoo] +Back.BLACK
+						obj_board.matrix[i][j] = colors.color_text(self.__shape1[i-self.ycoo][j-self.xcoo],"Cyan") 
 				elif self.direction == -1 and self.powermode==False:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape2[i-self.ycoo][j-self.xcoo]+Back.BLACK
+					obj_board.matrix[i][j] = colors.color_text(self.__shape2[i-self.ycoo][j-self.xcoo],"Cyan") 
 				elif  self.powermode==True:
-					obj_board.matrix[i][j] =Fore.CYAN + self.__shape3[i-self.ycoo][j-self.xcoo]+Back.BLACK
+					obj_board.matrix[i][j] = colors.color_text(self.__shape3[i-self.ycoo][j-self.xcoo],"Cyan") 
 				
 	def check_enemy_collision(self, obj_board):
-		if(obj_board.matrix[self.ycoo+3][self.xcoo]==Fore.RED + '+' + Fore.RESET # simulate gravity
-		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==Fore.RED + '+' + Fore.RESET
-		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==Fore.RED + '+' + Back.RESET):
+		if(obj_board.matrix[self.ycoo+3][self.xcoo]==colors.color_text("+","Red") # simulate gravity
+		or obj_board.matrix[self.ycoo+3][self.xcoo+1]==colors.color_text("+","Red")
+		or obj_board.matrix[self.ycoo+3][self.xcoo+2]==colors.color_text("+","Red")):
 			self.life -= 1
 			obj_board.revive(self)
 			self.did_he_die = 0

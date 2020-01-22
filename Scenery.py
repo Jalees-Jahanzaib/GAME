@@ -18,24 +18,7 @@ class Scenery:
 
     def create_sky(self, grid):
         for i in range(500):
-            grid[0][i] = self.__sky
-
-    def create_clouds(self, grid, c, d):
-        with open("./clouds.txt") as obj:
-            for line in obj:
-                self.__cloud.append(line.strip('\n'))
-
-        while (d < 271):
-            e = d
-            f = c
-            for i in range(4):
-                for j in range(16):
-                    grid[c][d] = Fore.BLUE + self.__cloud[i][j] + '\x1b[0m'
-                    d += 1
-                d = e
-                c += 1
-            c = f + random.randint(0, 2)
-            d += 37 + random.randint(10, 50)
+            grid[1][i] = self.__sky
 
     def create_coins_platforms(self, obj_board):
 

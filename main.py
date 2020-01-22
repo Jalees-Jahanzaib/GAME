@@ -62,6 +62,10 @@ def savemando():
 		jetpacker.reapper(board)
 
 	elif can_he == 2:
+		if jetpacker.powermode == True: # powermode is for the shield
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
 		jetpacker.life -= 1
 		board.revive(jetpacker)
 		jetpacker.did_he_die = 0
@@ -97,7 +101,7 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
-			if jetpacker.powermode == True:
+			if jetpacker.powermode == True: # powermode is for the shield
 				print("ttt")
 				jetpacker.powermode = False
 				jetpacker.life += 1
@@ -120,6 +124,10 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
+			if jetpacker.powermode == True: # powermode is for the shield
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
 			jetpacker.life -= 1
 			board.revive(jetpacker)
 			jetpacker.did_he_die = 0
@@ -138,6 +146,10 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
+			if jetpacker.powermode == True: # powermode is for the shield
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
 			jetpacker.life -= 1
 			board.revive(jetpacker)
 			jetpacker.did_he_die = 0
@@ -156,6 +168,10 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
+			if jetpacker.powermode == True: # powermode is for the shield
+				print("ttt")
+				jetpacker.powermode = False
+				jetpacker.life += 1
 			jetpacker.life -= 1
 			board.revive(jetpacker)
 			jetpacker.did_he_die = 0
@@ -167,7 +183,7 @@ def motion(x5):
 
 	if char == 'w':
 		prev_ycoo = jetpacker.ycoo
-		jetpacker.check_not_collision_downstar(board.matrix,board)
+		#jetpacker.check_not_collision_downstar(board.matrix,board)
 		while (jetpacker.ycoo != prev_ycoo - 8
 			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 2] == " "
 			and board.matrix[jetpacker.ycoo - 1][jetpacker.xcoo + 1] == " "
@@ -243,8 +259,8 @@ while True:
 	x3 += 1
 	jetpacker.check_enemy_collision(board)
 	# jetpacker.check_magent(board)
-	jetpacker.check_not_collision_down(board.matrix, obj_config)
-	jetpacker.check_not_collision_up(board.matrix, obj_config)
+	jetpacker.check_not_collision_down(board.matrix, obj_config,board)
+	jetpacker.check_not_collision_up(board.matrix, obj_config,board)
 	if jetpacker.xcoo >= 50:
 		D1.reprintdragon(jetpacker)
 		D1.movement(jetpacker)

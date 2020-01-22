@@ -1,8 +1,6 @@
-from colorama import init, Fore, Back
-init()
 import os
 from random import randint
-
+import colors
 
 class Main_person:
 	def __init__(self, ycoo, xcoo, dire):
@@ -26,17 +24,16 @@ class Enemy(Main_person):
 			self.starting_position3(grid)
 	def starting_position1(self, grid):
 		for i in range(self.ycoo, self.ycoo + 4):
-			grid[i][self.xcoo] = Fore.RED + '+' + Fore.RESET
+			grid[i][self.xcoo] = colors.color_text('+',"Red")
 
 	def starting_position2(self, grid):
 		for i in range(self.xcoo, self.xcoo + 6):
-			grid[self.ycoo][i] = Fore.RED + '+' + Fore.RESET
+			grid[self.ycoo][i] = colors.color_text('+',"Red")
 
 	def starting_position3(self, grid):
 		for i in range(self.ycoo, self.ycoo + 3, 1):
 			for j in range(self.xcoo, self.xcoo + 3, 1):
-				grid[i][j] = Fore.RED + self.shape3[i - self.ycoo][
-					j - self.xcoo] + Fore.RESET
+				grid[i][j] = colors.color_text(self.shape3[i - self.ycoo][j - self.xcoo],"Red")
 
 	def remove_position1(self, grid):
 		for i in range(self.ycoo, self.ycoo + 4):
@@ -78,7 +75,38 @@ class Bullet:
 
 	def bullethits(self, grid,bullet):
 	
-		if grid[self.ycoo][self.xcoo+1]=="+":
+		if '+' in grid[self.ycoo][self.xcoo+1]:
+			xcoo=self.xcoo+1
+			ycoo=self.ycoo
+			if '+' in grid[self.ycoo+1][self.xcoo+1] or  '+' in grid[self.ycoo-1][self.xcoo+1]:
+				while('+' in grid[ycoo][self.xcoo+1]):
+					grid[ycoo][self.xcoo+1]=' '
+					ycoo+=1
+				ycoo=self.ycoo-1
+				while('+' in grid[ycoo][self.xcoo+1]):
+					grid[ycoo][self.xcoo+1]=' '
+					ycoo-=1
+			elif '+' in grid[self.ycoo][self.xcoo+1] or  '+' in grid[self.ycoo][self.xcoo]:
+				while('+' in grid[ycoo][xcoo]):
+					grid[ycoo][xcoo]=' '
+					xcoo+=1
+				xcoo=self.xcoo
+				while('+' in grid[ycoo][xcoo]):
+					grid[ycoo][xcoo]=' '
+					xcoo-=1
+			else:
+				print("PLEASE")
+				while('+' in grid[ycoo][xcoo]):
+						grid[ycoo][xcoo]=' '
+						xcoo+=1
+						ycoo+=1
+				xcoo=self.xcoo
+				ycoo=self.ycoo-1
+				while('+' in grid[ycoo][xcoo]):
+					grid[ycoo][xcoo]=' '
+					xcoo-=1
+					ycoo-=1
+			grid[self.ycoo][self.xcoo]=' '
 			# self.killbullet(bullet)
 			return 1
 			# getx=-1
@@ -100,8 +128,8 @@ class Magnet:
 	def printmagnet(self, grid):
 		for i in range(20 - self.random1, 23 - self.random1, 1):
 			for j in range(15 - self.random1, 18 - self.random1, 1):
-				grid[i][j] = Fore.MAGENTA + self.shape1[i - 20 + self.random1][
-					j - 15 + self.random1] + '\x1b[0m'
+				grid[i][j] = self.shape1[i - 20 + self.random1][
+					j - 15 + self.random1]
 
 	def removemagent(self, grid):
 		for i in range(20, 23):
