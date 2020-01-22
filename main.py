@@ -24,13 +24,13 @@ def savemando():
 		jetpacker.reapper(board)
 
 	elif can_he == 2:
-		if jetpacker.powermode == True: # powermode is for the shield
+		if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-		jetpacker.life -= 1
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+		jetpacker.set_life(jetpacker.get_life()-1)	
 		board.revive(jetpacker)
-		jetpacker.did_he_die = 0
+		jetpacker.set_did_he_die(0)
 	
 
 # import simpleaudio as sa
@@ -102,13 +102,13 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
-			if jetpacker.powermode == True: # powermode is for the shield
+			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-			jetpacker.life -= 1
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 
 		else:
 			pass
@@ -125,13 +125,13 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
-			if jetpacker.powermode == True: # powermode is for the shield
+			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-			jetpacker.life -= 1
+				jetpacker.set_powermode(False) 
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 
 		else:
 			pass
@@ -147,13 +147,13 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
-			if jetpacker.powermode == True: # powermode is for the shield
+			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-			jetpacker.life -= 1
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 
 		else:
 			pass
@@ -169,13 +169,13 @@ def motion(x5):
 			jetpacker.reapper(board)
 
 		elif can_he == 2:
-			if jetpacker.powermode == True: # powermode is for the shield
+			if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-			jetpacker.life -= 1
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 
 		else:
 			pass
@@ -199,9 +199,8 @@ def motion(x5):
 		bullets.append(en1)
 	if char == "p":
 		jetpacker.mode = True
-		jetpacker.direction = 1
 	if char == "x" and jetpacker.keypress:
-		jetpacker.powermode = True
+		jetpacker.set_powermode(True)
 		jetpacker.keypress = False
 		config.delta = time.time()
 		config.delta1 = time.time()
@@ -220,21 +219,21 @@ while True:
 		startime += 1
 	time.sleep(0.05)
 	print('\033[0;0H', end='')
-	obj_config.rem = 150 - (round(time.time()) - round(x1))
-	print("TIME REMAINING:", obj_config.rem, end=' \t \t')
-	print("LIVES:", jetpacker.life, end=' \t \t')
-	print("COINS:", obj_config.coins, end='\t \t')
+	obj_config.set_rem(216 - (round(time.time()) - round(x1)))
+	print("TIME REMAINING:", obj_config.get_rem(), end=' \t \t')
+	print("LIVES:", jetpacker.get_life(), end=' \t \t')
+	print("COINS:", obj_config.get_coins(), end='\t \t')
 	print("Dragon Life:", D1.get_life(), end='\t \t')
 	# for i in range(0,len(listx)):
 	# 	print(listx[i],end='\n')
 
-	if (obj_config.rem == 0 or jetpacker.life == 0):
+	if (obj_config.get_rem() == 0 or jetpacker.get_life() == 0):
 		os.system('clear')
 		print("\n\n\n\n\t\t\t\tGAME OVER")
 		quit()
-	if (jetpacker.powermode == True):
+	if (jetpacker.get_powermode() == True):
 		if ((10 - ((time.time()) - (config.delta))) <= 0):
-			jetpacker.powermode = False
+			jetpacker.set_powermode(False)
 			config.delta = 0
 	if ((60 - ((time.time()) - (config.delta1))) <= 0):
 		jetpacker.keypress = True

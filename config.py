@@ -1,10 +1,17 @@
 import os
 class Config:
 	def __init__(self):
-		self.rem = 150
-		self.coins =0 
-		self.kills = 0 
-
+		self._rem = 214
+		self._coins =0 
+		self._kills = 0 
+	def get_rem(self):
+		return self._rem
+	def get_coins(self):
+		return self._coins
+	def set_coins(self,x):
+		self._coins=x
+	def set_rem(self,x):
+		self._rem=x
 	def is_number(self, s):
 		try:
 			float(s)
@@ -22,13 +29,13 @@ class Config:
 
 	def coins_right(self, grid, obj_mario):
 		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo + 3] == "$"):
-			self.coins += 1
+			self._coins += 1
 
 	def coins_left(self, grid, obj_mario):
 		if (grid[obj_mario.ycoo + 2][obj_mario.xcoo - 1] == "$"):
-			self.coins += 1
+			self._coins += 1
 	def coins_up(self, grid, obj_mario):
-		self.coins += 1
+		self._coins += 1
 
 	
 
@@ -48,11 +55,11 @@ def savemando(jetpacker,obj_config,board):
 		jetpacker.reapper(board)
 
 	elif can_he == 2:
-		if jetpacker.powermode == True: # powermode is for the shield
+		if jetpacker.get_powermode() == True: # powermode is for the shield
 				print("ttt")
-				jetpacker.powermode = False
-				jetpacker.life += 1
-		jetpacker.life -= 1
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+		jetpacker.set_life(jetpacker.get_life()-1)	
 		board.revive(jetpacker)
 		jetpacker.did_he_die = 0
 	

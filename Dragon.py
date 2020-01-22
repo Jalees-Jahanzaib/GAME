@@ -51,19 +51,19 @@ class DragonFire:
 		
 	def put_bullet(self,grid,jetpacker,board):
 		if (self._xcoo-1=="o" or self._xcoo-1 =="<" or self._xcoo-1=="^") or (self._num-1=="o" or self._num-1 =="<" or self._num-1=="^"):
-			if jetpacker.powermode==True:
-				jetpacker.powermode=False
-				jetpacker.life+=1
-			jetpacker.life -= 1
+			if jetpacker.get_powermode() == True: # powermode is for the shield
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 		if (self._num+1=="o" or self._num+1 =="<" or self._num+1=="^") or (self._xcoo+1=="o" or self._xcoo+1 =="<" or self._xcoo+1=="^"):
-			if jetpacker.powermode==True:
-				jetpacker.powermode=False
-				jetpacker.life+=1
-			jetpacker.life -= 1
+			if jetpacker.get_powermode() == True: # powermode is for the shield
+				jetpacker.set_powermode(False)
+				jetpacker.set_life(jetpacker.get_life()+1)
+			jetpacker.set_life(jetpacker.get_life()-1)	
 			board.revive(jetpacker)
-			jetpacker.did_he_die = 0
+			jetpacker.set_did_he_die(0)
 		if self._xcoo-1>=0:
 			self._xcoo=self._xcoo-1
 		
