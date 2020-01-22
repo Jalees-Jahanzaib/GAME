@@ -78,6 +78,7 @@ class Bullet:
 		if '+' in grid[self.ycoo][self.xcoo+1]:
 			xcoo=self.xcoo+1
 			ycoo=self.ycoo
+			print(ycoo,xcoo)
 			if '+' in grid[self.ycoo+1][self.xcoo+1] or  '+' in grid[self.ycoo-1][self.xcoo+1]:
 				while('+' in grid[ycoo][self.xcoo+1]):
 					grid[ycoo][self.xcoo+1]=' '
@@ -95,7 +96,6 @@ class Bullet:
 					grid[ycoo][xcoo]=' '
 					xcoo-=1
 			else:
-				print("PLEASE")
 				while('+' in grid[ycoo][xcoo]):
 						grid[ycoo][xcoo]=' '
 						xcoo+=1
@@ -106,6 +106,7 @@ class Bullet:
 					grid[ycoo][xcoo]=' '
 					xcoo-=1
 					ycoo-=1
+				
 			grid[self.ycoo][self.xcoo]=' '
 			# self.killbullet(bullet)
 			return 1

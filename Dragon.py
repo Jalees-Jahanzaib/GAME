@@ -1,11 +1,12 @@
-from colorama import init, Fore,Back
-init()
-
+import colors
 class Dragon:
 	
 	def __init__(self):
 		self.life = 5
-		self.shape=[["D","R","A"],["G","O","N"],["F","L","Y"]]   
+		self.shape=[list("@@ _   "),
+					list("()(_)  "),
+					list("|| ||\\ ")]
+		#[["D","R","A"],["G","O","N"],["F","L","Y"]]   
 		self.onboard=False
 		self.blank=" "
 		self.xcoo=0
@@ -13,17 +14,17 @@ class Dragon:
 	
 	def printdragon(self):
 		for i in range (0,3):
-			for j in range(0,3):
-				print('\033['+str(26+i)+';'+str(111+j)+'H'+self.shape[i][j],end='') 
+			for j in range(0,len(self.shape[0])):
+				print('\033['+str(26+i)+';'+str(111+j)+'H'+colors.color_text(self.shape[i][j],"Pink"),end='') 
 	def reprintdragon(self,jetpacker):
 		for i in range (0,3):
-			for j in range(0,3):
-				print('\033['+str(jetpacker.ycoo+i)+';'+str(111+j)+'H'+self.shape[i][j],end='')
+			for j in range(0,len(self.shape[0])):
+				print('\033['+str(jetpacker.ycoo+i)+';'+str(111+j)+'H'+colors.color_text(self.shape[i][j],"Pink"),end='')
 				self.ycoo=jetpacker.ycoo+i
 				self.xcoo=111+j
 	def removedragon(self,jetpacker):
 		for i in range (0,30):
-			for j in range(0,3):
+			for j in range(0,len(self.shape[0])):
 				print('\033['+str(i)+';'+str(111+j)+'H'+ self.blank,end='') 
 	def movement(self,jetpacker):
 		self.removedragon(jetpacker)
@@ -41,7 +42,7 @@ class Dragon:
 	
 class DragonFire:
 	def __init__(self,jetpacker):
-		self.shape1=Back.RED + '+' + Back.RESET
+		self.shape1= colors.color_text("+","Red") 
 		self.xcoo=495
 		self.num=0
 		
@@ -65,9 +66,9 @@ class DragonFire:
 		
 		if self.num==0:
 			self.num=jetpacker.ycoo+1       
-			grid[jetpacker.ycoo+1][self.xcoo] = self.shape1
+			grid[jetpacker.ycoo+1][self.xcoo] = colors.color_text(self.shape1,"Pink")
 		else:
-			grid[self.num][self.xcoo] = self.shape1
+			grid[self.num][self.xcoo] = colors.color_text(self.shape1,"Pink")
 	def removebullet(self,grid,jetpacker):
 		grid[self.num][self.xcoo] = " "
 	def move(self,grid,jetpacker,board):
