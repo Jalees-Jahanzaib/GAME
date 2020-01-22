@@ -62,4 +62,6 @@ def savemando(jetpacker,obj_config,board):
 		jetpacker.set_life(jetpacker.get_life()-1)	
 		board.revive(jetpacker)
 		jetpacker.did_he_die = 0
-	
+
+uptime=0
+gravy=0

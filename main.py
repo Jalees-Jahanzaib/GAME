@@ -183,6 +183,8 @@ def motion(x5):
 		quit()
 
 	if char == 'w':
+		config.uptime=time.time()
+		config.gravy=0
 		prev_ycoo = jetpacker.ycoo
 		#jetpacker.check_not_collision_downstar(board.matrix,board)
 		while (jetpacker.ycoo != prev_ycoo - 8
@@ -211,9 +213,28 @@ x2 = time.time()
 x3 = 0
 x4 = 0
 x5=0
-startime = 0
+startime=0
 config.delta = 0
+config.uptime=0
+aaaaaa=[0.9,0.8,0.7,0.6,0.5,0.4,0.3,0.2,0.1]
 while True:
+	if(config.uptime!=0 and time.time()-config.uptime>=aaaaaa[config.gravy]):
+		config.gravy+=1
+		if(config.gravy>8):
+			config.gravy=8
+		config.uptime=time.time()
+		for i in range(2):
+			if('$' in board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo+i]):
+				Config.set_coins(Config.get_coins()+1)
+		if (board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo] ==" "  
+			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 1] == " "
+			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 2] == " "
+			and True):
+
+			jetpacker.remove_jp(board)
+			jetpacker.ycoo += 1
+			jetpacker.reapper(board)
+
 	if startime == 0:
 		os.system('clear')
 		startime += 1
@@ -276,15 +297,7 @@ while True:
 		print("GAME OVER")
 		quit()
 
-	if (board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo] ==
-			" "  # simulate gravity
-			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 1] == " "
-			and board.matrix[jetpacker.ycoo + 3][jetpacker.xcoo + 2] == " "
-			and True):
-
-		jetpacker.remove_jp(board)
-		jetpacker.ycoo += 1
-		jetpacker.reapper(board)
+	
 
 	if (jetpacker.xcoo > 497 or not D1.living()):
 		print('\033[0;0H', end='')
